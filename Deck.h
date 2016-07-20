@@ -12,11 +12,23 @@ class Deck{
 	private:
 		std::vector<std::string> deck;
 	public:
-		/* Default constructor fill the deck reading cards from the file deck.txt */
+		/* Default constructor fills the deck reading cards from the file deck.txt */
 		Deck(){ 										  
 			std::ifstream is("./deck.txt");
 			if(!is.good()){
-				std::cerr < "ERROR! Can not open the file.\n";
+				std::cerr << "ERROR! Can not open the file.\n";
+				return;
+			}
+			std::string card;
+			while(is >> card){
+				deck.push_back(card);
+			}
+		}
+		/* Constructor fills the deck reading a different default deck file */
+		Deck(const std::string& deck){ 										  
+			std::ifstream is(deck.c_str());
+			if(!is.good()){
+				std::cerr << "ERROR! Can not open the file.\n";
 				return;
 			}
 			std::string card;
@@ -26,10 +38,10 @@ class Deck{
 		}
 		
 		/* This method shuffles the deck */
-		void Mescola();	
+		void Shuffle();	
 		/* This method returns a card to a player */
 		inline std::string GetCard(){ 
-			std::string card = deck[deck.size()-1];
+			std::string card = deck.back();
 			deck.pop_back();
 			return card;
 		}
