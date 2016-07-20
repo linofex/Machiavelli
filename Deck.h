@@ -1,6 +1,5 @@
 #ifndef DECK_H
 #define DECK_H
-/*commento*/
 
 #include <vector>
 #include <string>
