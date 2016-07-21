@@ -1,2 +1,0 @@
-esempio.cc
-
