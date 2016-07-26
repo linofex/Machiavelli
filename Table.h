@@ -1,4 +1,4 @@
- #ifndef TABLE_H
+#ifndef TABLE_H
 #define TABLE_H
 
 #include <map>
@@ -6,11 +6,13 @@
 
 class Table{
 	private:
-		typedef std::map<int, std::vector<std::string>> m_map:
+		typedef std::map<int, std::vector<std::string> > m_map:
 		m_map table;
 		int n_set; //Optional
 	public:
-		void PrintTable(){};
+	
+		void PrintTable();
+		
 		inline void UpdateTable(const m_map& table_){ 
 			table = table_;
 		}
