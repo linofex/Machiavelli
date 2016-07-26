@@ -40,7 +40,7 @@ class Deck{
 		/* This method shuffles the deck */
 		void Shuffle();	
 		/* This method returns a card to a player */
-		inline std::string GetCard () const { 
+		inline std::string GetCard () { 
 			std::string card = deck.back();
 			deck.pop_back();
 			return card;
