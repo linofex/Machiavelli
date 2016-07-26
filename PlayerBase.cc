@@ -8,9 +8,9 @@ void PlayerBase::AddCard(const std::string& card){
 
 void PlayerBase::SeeCards(){
 	for(int i = 0; i < cards.size(); ++i){
-		std::cout << cards[i]<< ' ';
+		std::cout << cards[i] << " ";
 	}
-	std::cout<<std::endl;
+	std::cout << std::endl;
 }
 
 void PlayerBase::Move(){}
