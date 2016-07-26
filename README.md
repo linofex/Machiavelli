@@ -2,9 +2,11 @@
 A game with cards
 
 20/09
+
 Start project
 
 26/09
+
 Added files:
 
   Table.cc & Table.h
