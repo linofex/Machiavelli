@@ -8,6 +8,7 @@ Start project
 Added files:
 
   Table.cc & Table.h
+  
   PlayerBase.cc & PlayerBase.h
   
 Edited files:
