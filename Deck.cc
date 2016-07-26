@@ -8,7 +8,7 @@ void Deck::Shuffle(){
 	random_shuffle(deck.begin(), deck.end());
 }
 	
-bool Deck::Empty(){
+bool Deck::Empty () const{
 	return deck.size() == 0;
 }
 

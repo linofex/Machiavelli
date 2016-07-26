@@ -1,6 +1,6 @@
 #include "Table.h"
 
-Table::PrintTable(){
+Table::PrintTable() const{
 	m_map::const_iterator iter = table.begin();
 	for(; iter != table.end(); ++iter){
 		std::cout<< iter->first;

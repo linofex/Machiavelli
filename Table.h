@@ -11,7 +11,7 @@ class Table{
 		int n_set; //Optional
 	public:
 	
-		void PrintTable();
+		void PrintTable() const;
 		
 		inline void UpdateTable(const m_map& table_){ 
 			table = table_;

@@ -6,7 +6,7 @@ void PlayerBase::AddCard(const std::string& card){
 	cards.push_back(card);
 	}
 
-void PlayerBase::SeeCards(){
+void PlayerBase::SeeCards() const {
 	for(int i = 0; i < cards.size(); ++i){
 		std::cout << cards[i] << " ";
 	}
@@ -15,7 +15,7 @@ void PlayerBase::SeeCards(){
 
 void PlayerBase::Move(){}
 
-bool PlayerBase::Empty(){
+bool PlayerBase::Empty()const{
 	return cards.size() == 0;
 }
 	

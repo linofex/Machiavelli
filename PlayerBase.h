@@ -28,13 +28,13 @@ class PlayerBase{
 		virtual void AddCard(const std::string& card);
 		
 		/* This method prints the cards */
-		virtual void SeeCards();
+		virtual void SeeCards() const;
 		
 		/* This method do the move */
 		virtual void Move() = 0;
 		
 		/* This method look if the player hasn't got cards */
-		virtual bool Empty();
+		virtual bool Empty() const;
 		
 		/* Destructor */
 		// virtual ~PlayerBase(){}
