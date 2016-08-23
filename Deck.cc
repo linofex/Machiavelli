@@ -12,7 +12,5 @@ bool Deck::Empty () const{
 	return deck.size() == 0;
 }
 
-//commento :)
-
 
 

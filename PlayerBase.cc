@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-void PlayerBase::AddCard(const std::string& card){
+void PlayerBase::AddCard(const Card& card){
 	cards.push_back(card);
 	}
 
@@ -13,7 +13,14 @@ void PlayerBase::SeeCards() const {
 	std::cout << std::endl;
 }
 
-void PlayerBase::Move(){}
+bool  PlayerBase::FindCard(const Card& card) const{
+	/*if(cards.find(card) != cards.end()){
+		return true;
+	}
+	else {
+		return false;
+	}*/
+}
 
 bool PlayerBase::Empty()const{
 	return cards.size() == 0;
