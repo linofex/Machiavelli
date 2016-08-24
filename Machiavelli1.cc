@@ -134,8 +134,9 @@ bool Machiavelli::Move(PlayerBase* player_){
 		
 		}
 	if (CheckMove(new_table.GetTable())){
-			return 1;
+			
 			table = new_table;
+                        return 1;
 		}
 		else {return 0;}	
 	}
