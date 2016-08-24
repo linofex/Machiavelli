@@ -38,27 +38,29 @@ bool Machiavelli::IsTris(const std::vector<Card>& cards)const {
 	}
 	return 1;
 }
-bool Machiavelli::IsStraight(const std::vector<Card>& cards)const {
-	if (cards.size() < 3) {return 0;}
-	for (int i = 0; i < cards.size();++i){
-		if (Card::CompareSuit(cards[0], cards[i]) != 0){
+bool Machiavelli::IsStraight(const std::vector<Card>& cards) const {
+	if (cards.size() < 3) {
+		return 0;
+	}
+	for (int i = 1; i < cards.size(); ++i) {
+		if (Card::CompareSuit(cards[0], cards[i]) != 0) {
 			return 0;
 		}
-		if(cards[cards.size()-2].GetIntValue() == 13 && cards[cards.size()-1].GetIntValue() != 1){return 0;} 
-		if(cards[i].GetIntValue() != 13){ 
-			if(i < (cards.size() - 1) && cards[i].GetIntValue() != (cards[i+1].GetIntValue() -1)){
+	}
+	for (int i = 1; i < cards.size(); ++i) {
+		if(cards[i].GetIntValue() != 13) { 
+			if(i < (cards.size() - 1) && cards[i].GetIntValue() != (cards[i+1].GetIntValue() - 1)) {
 				return 0;
 			}
 		}
 		else{
-			if (cards[i+1].GetIntValue() != 1) {return 0;}
+			if (cards[i + 1].GetIntValue() != 1) {
+				return 0;
+			}
 		}
-		
 	}
 	return 1;
-	
 }
-
 
 bool Machiavelli::CheckMove(const t_map& table)const {
 	t_map::const_iterator iter = table.begin();
@@ -76,7 +78,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 	do {
 		PrintOp();
 		std::cin >> move;
-	}while(move.compare("move") != 0 || move.compare("passo") != 0);
+	}while(move.compare("move") == 0 || move.compare("passo") == 0);
 	if (move.compare("passo") == 0){
 		player_->AddCard(deck.GetCard());
 		return 1;
@@ -88,9 +90,9 @@ bool Machiavelli::Move(PlayerBase* player_){
 			do {
 				PrintOp1();
 				std::cin >> move;
-			}while(move.compare("prendi") != 0 || move.compare("passo") != 0 || move.compare("ins"));
+			}while(move.compare("prendi") == 0 || move.compare("passo") == 0 || move.compare("ins") == 0);
 			if(move.compare("passo") == 0){
-					if (flag)
+					if (flag==0)
 						player_->AddCard(deck.GetCard());
 					return 1;
 			}
@@ -104,11 +106,11 @@ bool Machiavelli::Move(PlayerBase* player_){
 					std::cin >> num >> value >> suit;
 					Card card(value, suit);
 					if (!player_->FindCard(card)){
-						std::cout <<  "Non hai la carta scelta, riprova"<< std::endl;
+						std::cout <<  "Non hai la carta scelta, riprova" << std::endl;
 					}
 					else{
 						new_table.AddCard(num , card);
-						flag=1;
+						flag = 1;
 					}
 					}
 				else {
@@ -120,7 +122,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 					std::cin >> num >> value >> suit;
 					Card card(value, suit);
 					if (!new_table.FindCard(num, card)){
-						std::cout <<  "Sul tavolo non c'e' la carta scelta, riprova"<< std::endl;
+						std::cout <<  "Sul tavolo non c'e' la carta scelta, riprova" << std::endl;
 					}
 					else{
 						new_table.RemoveCard(num, card);
