@@ -72,6 +72,7 @@ bool Machiavelli::CheckMove(const t_map& table)const {
 
 bool Machiavelli::Move(PlayerBase* player_){
 	std::string move;
+        Table new_table = table;
 	do {
 		PrintOp();
 		std::cin >> move;
@@ -82,7 +83,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 	}
 	else{
 		int flag = 0;
-		Table new_table = table;
+		
 		do{
 			do {
 				PrintOp1();
@@ -130,13 +131,13 @@ bool Machiavelli::Move(PlayerBase* player_){
 					}
 					}
 			}	while(move.compare("passo") != 0);
-		if (CheckMove(new_table.GetTable())){
+		
+		}
+	if (CheckMove(new_table.GetTable())){
 			return 1;
 			table = new_table;
 		}
-		else {return 0;}
-		}
-		
+		else {return 0;}	
 	}
 	
 
