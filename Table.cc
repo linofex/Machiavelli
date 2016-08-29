@@ -68,3 +68,7 @@ bool Table::RemoveCard(const int& i, const Card& card){
 			
 }
 
+void Table::SetTable(const t_map& table_){
+	table= table_;
+}
+

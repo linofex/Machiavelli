@@ -22,6 +22,7 @@ class Table{
 		Table():n_set(0){}
 		void PrintTable() const;
 		inline t_map GetTable(){return table; }
+		void SetTable(const t_map& table_);
 		void AddCard(const Card& card );
 		bool AddCard(const int& i, const Card& card);
 		bool RemoveCard(const int& i, const Card& card);

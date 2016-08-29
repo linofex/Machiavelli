@@ -82,7 +82,8 @@ bool Machiavelli::Move(PlayerBase* player_){
 	}
 	else{
 		int flag = 0;
-		Table new_table = table;
+		t_map old_table = table.GetTable();
+		std::vector<Card> old_cards = player_->GetCards();
 		do{
 			do {
 				PrintOp1();
@@ -106,7 +107,8 @@ bool Machiavelli::Move(PlayerBase* player_){
 						std::cout <<  "Non hai la carta scelta, riprova"<< std::endl;
 					}
 					else{
-						new_table.AddCard(num , card);
+						table.AddCard(num , card);
+						player_->RemoveCard(card);
 						flag=1;
 					}
 					}
@@ -118,23 +120,26 @@ bool Machiavelli::Move(PlayerBase* player_){
 					std::cout << "Scegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere\n";
 					std::cin >> num >> value >> suit;
 					Card card(value, suit);
-					if (!new_table.FindCard(num, card)){
+					if (!table.FindCard(num, card)){
 						std::cout <<  "Sul tavolo non c'e' la carta scelta, riprova"<< std::endl;
 					}
 					else{
-						new_table.RemoveCard(num, card);
+						table.RemoveCard(num, card);
 						std::cout << "Scegli mazzetto dove inserirla:\n";
 						std::cin >> num;
-						new_table.AddCard(num, card);
+						table.AddCard(num, card);
 						flag = 1;
 					}
 					}
 			}	while(move.compare("passo") != 0);
-		if (CheckMove(new_table.GetTable())){
+		if (CheckMove(table.GetTable())){
 			return 1;
-			table = new_table;
 		}
-		else {return 0;}
+		else {
+			player_->SetCards(old_cards);
+			table.SetTable(old_table);
+			return 0;
+		}
 		}
 		
 	}

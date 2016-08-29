@@ -28,10 +28,18 @@ class PlayerBase{
 		/* This method add a card, picked from the deck (in Machiavelli's class)*/
 		virtual void AddCard(const Card& card);
 		
+		/* This method remove a card*/
+		virtual void RemoveCard(const Card& card);
+		
+		/* This method set a deck of cards*/
+		virtual void SetCards(const std::vector<Card>& cards);
+		
+		/*This method return the deck of cards*/
+		virtual std::vector<Card> GetCards() const;
+		
 		/* This method prints the cards */
 		virtual void SeeCards() const;
-		
-		
+				
 		/* This method look if the player hasn't got cards */
 		virtual bool Empty() const;
 		
