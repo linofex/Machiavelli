@@ -8,7 +8,7 @@ void Table::PrintTable() const{
 		std::cout<< iter->first;
 		std::vector<Card>::const_iterator it = iter->second.begin();
 		for(; it != iter->second.end(); ++it ){
-			std::cout << *it << " "; //g++ error se non metto anche Card.cc
+			std::cout << *it << " "; 
 		}
 		std::cout<<std::endl;
 	}

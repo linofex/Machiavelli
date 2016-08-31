@@ -20,6 +20,7 @@ class Machiavelli{
 		void DealCards();
 		//bool CheckMove(const Table& table);
 		bool Move(PlayerBase* player_);
+		void Game();
 };
 //Machiavelli1
 void PrintOp();
