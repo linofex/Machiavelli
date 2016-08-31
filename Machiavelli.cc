@@ -172,6 +172,18 @@ bool Machiavelli::Move(PlayerBase* player_){
 }
 
 void Machiavelli::Game(){
+	deck.Shuffle();
+	DealCards();
+	int win = 0;
+	while(win == 0){
+		for(int i = 0; i < players.size(); ++i){
+			Move(players[i]);
+			if(players[i]->Empty()){
+				std::cout << "Il giocatore " << i << " vince!" << std::endl;
+				win = 1;
+				break;
+			}
+		}
+	}
+	return;
 }
-	
-
