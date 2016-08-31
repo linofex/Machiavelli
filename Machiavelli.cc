@@ -1,5 +1,4 @@
 #include "Machiavelli.h"
-#include <sstream>
 #include <iostream> 
 
 void PrintOp(){
@@ -172,6 +171,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 	}	
 }
 
-void Machiavelli::Game(){}
+void Machiavelli::Game(){
+}
 	
 
