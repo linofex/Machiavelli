@@ -92,7 +92,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 	}while(move.compare("move") == 0 || move.compare("passo") == 0);
 	if (move.compare("passo") == 0){
 		if(deck.Empty()){
-			std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n"
+			std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n";
 		}
 		else {
 			player_->AddCard(deck.GetCard());
@@ -112,7 +112,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 			if(move.compare("passo") == 0){
 					if (flag == 0) {
 						if(deck.Empty()){
-							std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n"
+							std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n";
 						}
 						else {
 							player_->AddCard(deck.GetCard());
