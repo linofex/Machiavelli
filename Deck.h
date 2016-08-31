@@ -15,7 +15,7 @@ class Deck{
 	public:
 		/* Default constructor fills the deck reading cards from the file deck.txt */
 		Deck(){ 										  
-			std::ifstream is("./deck.txt");
+			std::ifstream is("./Deck.txt");
 			if(!is.good()){
 				std::cerr << "ERROR! Can not open the file.\n";
 				return;

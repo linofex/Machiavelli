@@ -88,7 +88,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 	do {
 		PrintOp();
 		std::cin >> move;
-	}while(move.compare("move") == 0 || move.compare("passo") == 0);
+	}while(move.compare("move") != 0 && move.compare("passo") != 0);
 	if (move.compare("passo") == 0){
 		if(deck.Empty()){
 			std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n";
@@ -107,7 +107,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 			do {
 				PrintOp1();
 				std::cin >> move;
-			}while(move.compare("prendi") != 0 || move.compare("passo") != 0 || move.compare("ins"));
+			}while(move.compare("prendi") != 0 && move.compare("passo") != 0 && move.compare("ins") != 0);
 			if(move.compare("passo") == 0){
 					if (flag == 0) {
 						if(deck.Empty()){

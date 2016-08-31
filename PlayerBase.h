@@ -10,7 +10,7 @@ class PlayerBase{
 	private:
 		std::string name;
 		std::vector<Card> cards;
-		static int n_player;
+		int n_player;
 		
 	public:
 		PlayerBase(){
