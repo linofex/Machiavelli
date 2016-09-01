@@ -87,16 +87,20 @@ bool Machiavelli::CheckMove(const t_map& table) const {
 
 // metodo che fa la mossa
 bool Machiavelli::Move(PlayerBase* player_){
-	std::cout << "Turno del giocatore: "<< player_->GetName() << std::endl;
+	std::cout << "\nTurno del giocatore: "<< player_->GetName() << std::endl;
+	std::cout << "Le tue carte: " << std::endl;
 	player_->SeeCards();
+	if(!table.Empty()){
+		table.PrintTable();
+	}
 	std::string move;
 	do {
 		PrintOp();
 		std::cin >> move;
-	}while(move.compare("mossa") != 0 && move.compare("passo") != 0);
-	if (move.compare("passo") == 0){
+	}while(move !="mossa"  && move != "passo");
+	if (move=="passo"){
 		if(deck.Empty()){
-			std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n";
+			std::cout << "\nIl mazzo e' vuoto, passi senza pescare carte.\n";
 		}
 		else {
 			player_->AddCard(deck.GetCard());
@@ -112,38 +116,38 @@ bool Machiavelli::Move(PlayerBase* player_){
 			do {
 				PrintOp1();
 				std::cin >> move;
-			}while(move.compare("prendi") != 0 && move.compare("passo") != 0 && move.compare("ins") != 0);
-			if(move.compare("passo") == 0){
+			}while(move != "prendi"  && move != "passo" != 0 && move !="ins");
+			if(move=="passo"){
 					if (flag == 0) {
 						if(deck.Empty()){
-							std::cout << "Il mazzo e' vuoto, passi senza pescare carte.\n";
+							std::cout <<"Il mazzo e' vuoto, passi senza pescare carte.\n";
 						}
 						else {
 							player_->AddCard(deck.GetCard());
-							std::cout << "Nuova carta aggiunta al tuo mazzo di carte\n";
+							std::cout <<"Nuova carta aggiunta al tuo mazzo di carte.\n";
 						}
 					}
 			}
-			else if (move.compare("ins") == 0){
+			else if (move=="ins"){
 					std::string value;
 					std::string suit;
 					int num;
 					table.PrintTable(); 
-					std::cout << "Scegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da inserire\n";
+					std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da inserire:\n";
 					player_->SeeCards();
 					std::cin >> num >> value >> suit;
 					Card card(value, suit);
 					std::cout << card;
 					if (!(player_->FindCard(card))){
-						std::cout <<  "Non hai la carta scelta, riprova"<< std::endl;
+						std::cout <<  "Non hai la carta scelta, riprova."<< std::endl;
 					}
 					else{
 						if(table.AddCard(num , card)){
-							std::cout << "Carta inserita correttamente e tolta dalle carte che hai in mano \n";
+							std::cout << "\nCarta inserita correttamente e tolta dalle carte che hai in mano. \n";
 	                                                player_->RemoveCard(card);
 						}
 						if(table.Empty()){
-							std::cout << "Tavolo vuoto\n";
+							std::cout << "\nTavolo vuoto\n";
 						}
 						else{
 							table.PrintTable();
@@ -157,53 +161,53 @@ bool Machiavelli::Move(PlayerBase* player_){
 				std::string suit;
 				int num; 
 				if(table.Empty()){
-					std::cout << "Il tavolo é vuoto!"<< std::endl;
+					std::cout << "\nIl tavolo é vuoto!"<< std::endl;
 					continue;
 				}
 				else{
 				 table.PrintTable();
 				}
-				std::cout << "Scegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere\n";
+				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere:\n";
 				std::cin >> num >> value >> suit;
 				Card card(value, suit);
 				if (!table.FindCard(num, card)){
-					std::cout <<  "Sul tavolo non c'e' la carta scelta, riprova"<< std::endl;
+					std::cout << "\nSul tavolo non c'e' la carta scelta, riprova."<< std::endl;
 				}
 				else{
 					if(table.RemoveCard(num, card)){
-						std::cout<< "Carta rimossa correttamente dal mazzetto " << num << std::endl;
+						std::cout<< "\nCarta rimossa correttamente dal mazzetto." << num << std::endl;
 						table.PrintTable();
 					}
 					else{
 						continue;
 					}
-					std::cout << "Scegli mazzetto dove inserirla:\n";
+					std::cout << "\nScegli mazzetto dove inserirla:\n";
 					std::cin >> num;
 					if(table.AddCard(num, card)){
-						std::cout << "Carta aggiunta correttamente al mazzetto "<< num << std::endl;
+						std::cout << "\nCarta aggiunta correttamente al mazzetto "<< num << std::endl;
 						table.PrintTable();
 					}
 				}
 			}
-		}while(move.compare("passo") != 0);
+		}while(move !="passo");
 	
 		if (move_flag == 0){
-			std::cout << "Per fare una mossa e' necessario Inserire almeno una carta!\n";
-			std::cout << "Mossa NON valida, ripristino tavolo e carte giocatore\n";
+			std::cout << "\nPer fare una mossa e' necessario Inserire almeno una carta!\n";
+			std::cout << "\nMossa NON valida, ripristino tavolo e carte giocatore.\n";
 			player_->AddCard(deck.GetCard());
-			std::cout << "Nuova carta aggiunta al tuo mazzo di carte\n";
+			std::cout << "\nNuova carta aggiunta al tuo mazzo di carte.\n";
 			player_->SetCards(old_cards);
 			table.SetTable(old_table);
 			return false;
 		}
 		else if (CheckMove(table.GetTable())){
-			std::cout<< "Mossa valida"<< std::endl;
+			std::cout<< "\nMossa valida"<< std::endl;
 			return true;
 		}	
 // Se la mossa non é valida, vengono settati i vecchi tavoli e mazzi
 // COSA FARE PERO'?? pesca una carta?
 		else { 
-			std::cout<< "Mossa NON valida, ripristino tavolo e carte giocatore" << std::endl;
+			std::cout<< "\nMossa NON valida, ripristino tavolo e carte giocatore." << std::endl;
 			player_->SetCards(old_cards);
 			table.SetTable(old_table);
 			return false;

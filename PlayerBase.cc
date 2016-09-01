@@ -6,6 +6,7 @@ int PlayerBase::n_player =  0;
 
 void PlayerBase::AddCard(const Card& card){
 	cards.push_back(card);
+	std::sort(cards.begin(), cards.end());
 	}
 
 void PlayerBase::SeeCards() const {

@@ -20,13 +20,18 @@ bool operator==(const Card& left, const Card& right){
 }
 
 std::ostream& operator<<(std::ostream& out, const Card& card){
-	out << "Card: " << card.GetValue()<< " " << card.GetSuit() << std::endl;
+	out << card.GetValue()<< card.GetSuit()<< " ";
 	return out;
 }
 
 
 bool operator<(const Card& left, const Card& right){
-	return left.GetIntValue() < right.GetIntValue();
+	if(left.GetIntValue() == right.GetIntValue()){
+		return (left.GetSuit() < right.GetSuit());
+	}
+	else{
+		return left.GetIntValue() < right.GetIntValue();
+	}
 }
 
 
