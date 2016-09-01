@@ -27,6 +27,7 @@ class Table{
 		bool AddCard(const int& i, const Card& card);
 		bool RemoveCard(const int& i, const Card& card);
 		bool FindCard(const int& i, const Card& card);
+		bool Empty() const;
 		inline void UpdateTable(const t_map& table_){ 
 			table = table_;
 		}

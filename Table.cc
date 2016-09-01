@@ -3,15 +3,20 @@
 #include <iostream>
 #include <string>
 void Table::PrintTable() const{
+	std::cout << "Tavolo:"<< std::endl;
 	t_map::const_iterator iter = table.begin();
 	for(; iter != table.end(); ++iter){
-		std::cout<< iter->first;
+		std::cout<<"Mazzetto: " << iter->first<< std::endl;
 		std::vector<Card>::const_iterator it = iter->second.begin();
 		for(; it != iter->second.end(); ++it ){
-			std::cout << *it << " "; 
+			std::cout << *it;
 		}
 		std::cout<<std::endl;
 	}
+}
+
+bool Table::Empty() const {
+	return table.empty();
 }
 
 bool Table::AddCard(const int& i, const Card& card){
@@ -35,7 +40,7 @@ bool Table::AddCard(const int& i, const Card& card){
 }
 
 void Table::AddCard(const Card& card){
-	table[n_set].push_back(card);
+	table[++n_set].push_back(card);
 }
 
 bool Table::FindCard(const int& i, const Card& card) {

@@ -10,7 +10,7 @@ class PlayerBase{
 	private:
 		std::string name;
 		std::vector<Card> cards;
-		int n_player;
+		static int n_player;
 		
 	public:
 		PlayerBase(){
@@ -19,7 +19,7 @@ class PlayerBase{
 			int2string << n_player;
 			name_ = int2string.str();
 			name = name_;
-			n_player ++;
+			n_player++;
 		}
 		
 		/* Constructor */
@@ -30,6 +30,12 @@ class PlayerBase{
 		
 		/* This method remove a card*/
 		virtual void RemoveCard(const Card& card);
+
+		/* This method sort the cards*/
+		virtual void SortCard();
+
+		/* This method return the name of the player */
+		virtual std::string GetName() const;
 		
 		/* This method set a deck of cards*/
 		virtual void SetCards(const std::vector<Card>& cards);
