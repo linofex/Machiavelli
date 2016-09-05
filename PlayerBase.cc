@@ -54,6 +54,6 @@ void PlayerBase::SortCard(){
 }   
 
 
-std::vector<Card> PlayerBase::GetCards() const{
+const std::vector<Card>& PlayerBase::GetCards() const{
 	return cards;
 }

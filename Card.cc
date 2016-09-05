@@ -1,15 +1,17 @@
 #include "Card.h"
 
 bool Card::CompareValue(const Card& left, const Card& right) {
-	if(left.GetValue().compare(right.GetValue()) == 0) 
+	if(left.GetValue() == right.GetValue()) {
 		return true;
-return false;
+	}
+	return false;
 }
 
 bool Card::CompareSuit(const Card& left, const Card& right){
-	if(left.GetSuit().compare(right.GetSuit()) == 0) 
+	if(left.GetSuit() == right.GetSuit()) { 
 		return true;
-return false;
+	}
+	return false;
 }
 
 bool operator==(const Card& left, const Card& right){
@@ -20,7 +22,7 @@ bool operator==(const Card& left, const Card& right){
 }
 
 std::ostream& operator<<(std::ostream& out, const Card& card){
-	out << card.GetValue()<< card.GetSuit()<< " ";
+	out << card.GetValue() << card.GetSuit()<< " ";
 	return out;
 }
 

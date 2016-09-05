@@ -1,10 +1,10 @@
 #include "Deck.h"
 #include <algorithm>
-#include <ctime>        // for time()
-#include <cstdlib>      // std::rand, std::srand
+#include <ctime>        // per time()
+#include <cstdlib>      // persrand
 
 void Deck::Shuffle(){
-	std::srand (unsigned (std::time(0)));
+	std::srand ((std::time(0)));
 	random_shuffle(deck.begin(), deck.end());
 }
 	

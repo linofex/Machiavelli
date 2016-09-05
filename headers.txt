@@ -1,0 +1,214 @@
+#ifndef CARD_H
+#define CARD_H
+
+#include <string>
+#include <iostream>
+#include <sstream>
+class Card{
+	private:
+		std::string value;
+		std::string suit;
+		int val;
+	public:
+		Card(const std::string& value_, const std::string& suit_):
+			value(value_), suit(suit_){
+			if (value.compare("A") == 0) val = 1;
+			else if (value.compare("K") == 0) val = 13;
+			else if (value.compare("Q") == 0) val = 12;
+			else if (value.compare("J") == 0) val = 11;
+			else {
+				std::stringstream stoi(value);
+				stoi >> val;
+			}
+		}
+		inline std::string GetValue() const {return value;}
+		inline std::string GetSuit() const {return suit;}
+		inline int GetIntValue() const {return val;}
+		static bool CompareValue(const Card& left, const Card& right);
+		static bool CompareSuit(const Card& left, const Card& right);
+		
+};
+
+bool operator==(const Card& left, const Card& right);
+std::ostream& operator<<(std::ostream& out, const Card& card);
+bool operator<(const Card& left, const Card& right);
+#endif
+#ifndef DECK_H
+#define DECK_H
+
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include "PlayerBase.h"
+#include "Card.h"
+
+class PlayerBase;
+class Deck{
+	private:
+		std::vector<Card> deck;
+	public:
+		/* Default constructor fills the deck reading cards from the file deck.txt */
+		Deck(){ 										  
+			std::ifstream is("./Deck.txt");
+			if(!is.good()){
+				std::cerr << "ERROR! Can not open the file.\n";
+				return;
+			}
+			std::string value;
+			std::string suit;
+			while(is >> value >> suit){
+				Card card(value, suit);
+				deck.push_back(card);
+			}
+		}
+		/* Constructor fills the deck reading a different default deck file */
+		Deck(const std::string& deck_){ 										  
+			std::ifstream is(deck_.c_str());
+			if(!is.good()){
+				std::cerr << "ERROR! Can not open the file.\n";
+				return;
+			}
+			std::string value;
+			std::string suit;
+			while(is >> value >> suit){
+				Card card(value, suit);
+				deck.push_back(card);
+			}
+		}
+		
+		/* This method shuffles the deck */
+		void Shuffle();	
+		/* This method returns a card to a player */
+		inline Card GetCard (){ 
+			Card card = deck.back();
+			deck.pop_back();
+			return card;
+		}
+		/* This method control if the deck is empty */
+		bool Empty() const;
+};
+
+#endif
+#ifndef MACHIAVELLI_H
+#define MACHIAVELLI_H
+
+#include <vector>
+#include "Deck.h"
+#include "Table.h"
+#include "PlayerBase.h"
+#include "Card.h" 
+
+class Machiavelli{
+	private:
+		std::vector<PlayerBase*> players;
+		Deck deck;
+		Table table;
+		bool CheckMove(const t_map& table)const;
+		bool IsTris(const std::vector<Card>& cards ) const ;
+		bool IsStraight(const std::vector<Card>& cards ) const;
+	public:
+		Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_ ):players(players_), deck(deck_), table(table_){}
+		void DealCards();
+		//bool CheckMove(const Table& table);
+		bool Move(PlayerBase* player_);
+		void Game();
+};
+//Machiavelli1
+void PrintOp();
+void PrintOp1();
+#endif
+#ifndef PLAYERBASE_H
+#define PLAYERBASE_H
+
+#include <string>
+#include <vector>
+#include <sstream>
+#include "Card.h"
+
+class PlayerBase{
+	private:
+		std::string name;
+		std::vector<Card> cards;
+		static int n_player;
+		
+	public:
+		PlayerBase(){
+			std::string name_;
+			std::stringstream int2string;
+			int2string << n_player;
+			name_ = int2string.str();
+			name = name_;
+			n_player++;
+		}
+		
+		/* Constructor */
+		PlayerBase(const std::string& name_):name(name_){n_player ++;}
+		
+		/* This method add a card, picked from the deck (in Machiavelli's class)*/
+		virtual void AddCard(const Card& card);
+		
+		/* This method remove a card*/
+		virtual void RemoveCard(const Card& card);
+
+		/* This method sort the cards*/
+		virtual void SortCard();
+
+		/* This method return the name of the player */
+		virtual std::string GetName() const;
+		
+		/* This method set a deck of cards*/
+		virtual void SetCards(const std::vector<Card>& cards);
+		
+		/*This method return the deck of cards*/
+		virtual std::vector<Card> GetCards() const;
+		
+		/* This method prints the cards */
+		virtual void SeeCards() const;
+				
+		/* This method look if the player hasn't got cards */
+		virtual bool Empty() const;
+		
+		/* This method search if you have the card */
+		virtual bool FindCard(const Card& card) const;
+		/* Destructor */
+		// virtual ~PlayerBase(){}
+};
+
+#endif
+#ifndef TABLE_H
+#define TABLE_H
+
+#include <map>
+#include <vector>
+#include "Card.h"
+
+typedef std::map<int, std::vector<Card> > t_map;
+
+class Table{
+	private:
+		
+		t_map table;
+		int n_set; //Optional
+	public:
+		Table(const t_map& table_):table(table_), n_set(0){
+			t_map::const_iterator iter = table.begin();
+			while(iter != table.end()){
+				n_set++;
+			}
+		}
+		Table():n_set(0){}
+		void PrintTable() const;
+		inline t_map GetTable(){ return table; }
+		void SetTable(const t_map& table_);
+		void AddCard(const Card& card );
+		bool AddCard(const int& i, const Card& card);
+		bool RemoveCard(const int& i, const Card& card);
+		bool FindCard(const int& i, const Card& card);
+		bool Empty() const;
+		inline void UpdateTable(const t_map& table_){ 
+			table = table_;
+		}
+};
+
+#endif

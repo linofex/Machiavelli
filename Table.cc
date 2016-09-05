@@ -2,9 +2,13 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
-void Table::PrintTable() const{
-	std::cout << "Tavolo:"<< std::endl;
-	t_map::const_iterator iter = table.begin();
+
+void Table::PrintTable() const {
+	if(table.empty()){
+		return;
+	}
+	std::cout << "Tavolo:" << std::endl;
+	t_map::const_iterator iter = table.begin(); 
 	for(; iter != table.end(); ++iter){
 		std::cout<<"Mazzetto: " << iter->first<< std::endl;
 		std::vector<Card>::const_iterator it = iter->second.begin();
@@ -12,12 +16,14 @@ void Table::PrintTable() const{
 			std::cout << *it;
 		}
 		std::cout<<std::endl;
+		std::cout<<std::endl;
 	}
 }
 
 bool Table::Empty() const {
 	return table.empty();
 }
+
 
 bool Table::AddCard(const int& i, const Card& card){
 	t_map::iterator iter = table.find(i);
@@ -29,7 +35,7 @@ bool Table::AddCard(const int& i, const Card& card){
 		std::cout << "Mazzetto non trovato, crearne uno nuovo? (si o  no)\n";
 		std::string dec;
 		std::cin>>dec;
-		if(dec.compare("si")==0){
+		if(dec == "si"){
 			this->AddCard(card);
 			return true;
 		}
@@ -50,9 +56,7 @@ bool Table::FindCard(const int& i, const Card& card) {
 			return true;
 		}
 	}
-	
-	return false;
-	
+	return false;	
 }
 
 bool Table::RemoveCard(const int& i, const Card& card){
@@ -74,6 +78,7 @@ bool Table::RemoveCard(const int& i, const Card& card){
 }
 
 void Table::SetTable(const t_map& table_){
-	table= table_;
+	table = table_;
+	n_set = table.size();
 }
 

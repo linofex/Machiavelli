@@ -1,6 +1,12 @@
 #ifndef DECK_H
 #define DECK_H
 
+/*Questa classe realizza un mazzo di carte da gioco francesi.
+La presenza di due costruttori é dovuta al fatto che magari un utente vuole
+giocare con delle carte che rispettino il solito formato di una carta, ma che 
+hanno un design diverso, magari con i semi in altre lingue. 
+*/
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -8,12 +14,11 @@
 #include "PlayerBase.h"
 #include "Card.h"
 
-class PlayerBase;
 class Deck{
 	private:
 		std::vector<Card> deck;
 	public:
-		/* Default constructor fills the deck reading cards from the file deck.txt */
+		// Costruttore che legge il mazzo di default 
 		Deck(){ 										  
 			std::ifstream is("./Deck.txt");
 			if(!is.good()){
@@ -27,7 +32,8 @@ class Deck{
 				deck.push_back(card);
 			}
 		}
-		/* Constructor fills the deck reading a different default deck file */
+		
+		// Costruttore che legge un mazzo personale
 		Deck(const std::string& deck_){ 										  
 			std::ifstream is(deck_.c_str());
 			if(!is.good()){
@@ -42,15 +48,16 @@ class Deck{
 			}
 		}
 		
-		/* This method shuffles the deck */
+		// Questo metodo mescola il mazzo 
 		void Shuffle();	
-		/* This method returns a card to a player */
+		
+		// Questo metodo toglie una carta dal mazzo e la ritorna 
 		inline Card GetCard (){ 
 			Card card = deck.back();
 			deck.pop_back();
 			return card;
 		}
-		/* This method control if the deck is empty */
+		// Questo metodo controlla se il mazzo é vuoto
 		bool Empty() const;
 };
 
