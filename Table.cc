@@ -32,10 +32,10 @@ bool Table::AddCard(const int& i, const Card& card){
 		return true;
 	}
 	else{
-		std::cout << "Mazzetto non trovato, crearne uno nuovo? (si o  no)\n";
+		std::cout << "Mazzetto non trovato, crearne uno nuovo? (s/n)\n";
 		std::string dec;
 		std::cin>>dec;
-		if(dec == "si"){
+		if(dec == "si" || dec == "s" || dec == "SI"){
 			this->AddCard(card);
 			return true;
 		}
