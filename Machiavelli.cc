@@ -127,6 +127,8 @@ bool Machiavelli::Move(PlayerBase* player_){
 			}while(move != "prendi"  && move != "passo" != 0 && move !="ins");
 			
 			 if (move=="ins"){
+			 	int flag_cards = 0;
+				std::string cards;
 				std::string value;
 				std::string suit;
 				char s_num;
@@ -134,40 +136,49 @@ bool Machiavelli::Move(PlayerBase* player_){
 				table.PrintTable(); 
 				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da inserire.\n";
 				//player_->SeeCards();
-				std::cin >> s_num >> value;
+				std::cin >> s_num;
+				std::cin.ignore();
+				std::getline(std::cin, cards);
+				if(cards.size() == 0){
+					std::cout << "Carte non inserite." << std::endl;
+					continue;
+				}
+				std::stringstream s(cards);
 				if(isdigit(s_num)){
 					num = atoi(&s_num);
 				}
 				else{
 					continue;
 				}
-				suit = value[value.size() -1];
-				value.erase(value.size() -1);
-				Card card(value, suit);
-				std::cout <<"La carta scelta: "<< card << "  Confermi? (s/n)" << std::endl;
+				std::cout <<"Le carte scelte sono: "<< cards << "  Confermi? (s/n)" << std::endl;
 				std::string dec;
 				std::cin >> dec;
 				if(dec == "no" || dec == "n" || dec == "NO"){
 					continue;
 				}
-				if (!(player_->FindCard(card))){
-					std::cout <<  "Non hai la carta scelta, riprova."<< std::endl;
+				while(s >> value) {
+					suit = value[value.size() -1];
+					value.erase(value.size() -1);
+					Card card(value, suit);
+					if (!(player_->FindCard(card)) && flag_cards == 0){
+						flag_cards = 1;
+						std::cout <<  "Non hai almeno una delle carte scelte."<< std::endl;
+					}
+					else if(player_->FindCard(card)) {
+						if(table.AddCard(num , card)){
+						//	std::cout << "\nCarta inserita correttamente e tolta dalle carte che hai in mano. \n";
+		                                        player_->RemoveCard(card);
+						}
+					}
+				}
+				if(table.Empty()){
+				std::cout << "\nTavolo vuoto\n";
 				}
 				else{
-					if(table.AddCard(num , card)){
-						std::cout << "\nCarta inserita correttamente e tolta dalle carte che hai in mano. \n";
-	                                        player_->RemoveCard(card);
-					}
-					if(table.Empty()){
-						std::cout << "\nTavolo vuoto\n";
-					}
-					else{
-						table.PrintTable();
-					}
-					
-					move_flag = true;
+					table.PrintTable();
 				}
-			}
+				move_flag = true;
+				}
 			else if (move == "prendi") {
 				std::string value;
 				std::string suit;
