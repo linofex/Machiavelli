@@ -36,9 +36,7 @@ class Machiavelli{
 		// Metodo che esegue il gioco.
 		void Game();
 };
-
-// Funzioni di stampa delle istruzioni
+//Machiavelli1
 void PrintOp();
 void PrintOp1();
-
 #endif

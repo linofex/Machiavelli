@@ -4,13 +4,19 @@ int main(){
 	Deck deck;
 	Table table;
 	std::vector<PlayerBase*> players;
-	PlayerBase* p1 = new PlayerBase();
-	PlayerBase* p2 = new PlayerBase();
-	players.push_back(p1);
-	players.push_back(p2);
+	int num;
+	std::cout << "Inserisci il numero di giocatori: ";
+	std::cin >> num;
+	for(int i = 0 ; i < num ; ++i){
+		std::string name;
+		std::cout << "Inserire il numero del giocatore " << i << std::endl;
+		std::cin >>  name;
+		players.push_back(new PlayerBase(name));
+	}	
 	Machiavelli Game(players, deck, table);
 	Game.Game();
-	delete p1;
-	delete p2;
+	for(int i = 0 ; i < num ; ++i){
+         	delete players[i];
+        }
 }
 
