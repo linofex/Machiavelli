@@ -180,16 +180,17 @@ bool Machiavelli::Move(PlayerBase* player_){
 				move_flag = true;
 				}
 			else if (move == "prendi") {
+				if(table.Empty()){
+                                        std::cout << "\nIl tavolo é vuoto!"<< std::endl;
+                                        continue;
+                                }
+                                else{
+                                 table.PrintTable();
+                                }
+
 				std::string value;
 				std::string suit;
 				int num; 
-				if(table.Empty()){
-					std::cout << "\nIl tavolo é vuoto!"<< std::endl;
-					continue;
-				}
-				else{
-				 table.PrintTable();
-				}
 				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere.\n";
 				std::cin >> num >> value >> suit;
 				Card card(value, suit);
