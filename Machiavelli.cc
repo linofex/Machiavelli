@@ -132,7 +132,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 				char s_num;
 				int num;
 				table.PrintTable(); 
-				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da inserire:\n";
+				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da inserire.\n";
 				//player_->SeeCards();
 				std::cin >> s_num >> value;
 				if(isdigit(s_num)){
@@ -179,7 +179,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 				else{
 				 table.PrintTable();
 				}
-				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere:\n";
+				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere.\n";
 				std::cin >> num >> value >> suit;
 				Card card(value, suit);
 				if (!table.FindCard(num, card)){
