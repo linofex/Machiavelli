@@ -10,15 +10,32 @@ void Table::PrintTable() const {
 	std::cout << "Tavolo:" << std::endl;
 	t_map::const_iterator iter = table.begin(); 
 	for(; iter != table.end(); ++iter){
-		std::cout<<"Mazzetto: " << iter->first<< std::endl;
-		std::vector<Card>::const_iterator it = iter->second.begin();
-		for(; it != iter->second.end(); ++it ){
+		if(!(iter->second.empty())){
+			std::cout<<"Mazzetto: " << iter->first<< std::endl;
+			std::vector<Card>::const_iterator it = iter->second.begin();
+			for(; it != iter->second.end(); ++it ){
 			std::cout << *it;
+			}
+		std::cout<<std::endl;
+		std::cout<<std::endl;
 		}
-		std::cout<<std::endl;
-		std::cout<<std::endl;
 	}
 }
+
+bool Table::UpdateTable(){
+	if(table.empty()){
+		return true;
+	}
+	t_map::iterator iter = table.begin(); 
+	for(; iter != table.end(); ++iter){
+		if((iter->second.empty())){
+			table.erase(iter);
+		}
+	
+	}
+	return true;
+}
+
 
 bool Table::Empty() const {
 	return table.empty();
@@ -32,7 +49,7 @@ bool Table::AddCard(const int& i, const Card& card){
 		return true;
 	}
 	else{
-		std::cout << "Mazzetto non trovato, crearne uno nuovo? (s/n)\n";
+		std::cout << "Mazzetto non trovato, crearne uno nuovo? (s/n) => ";
 		std::string dec;
 		std::cin>>dec;
 		if(dec == "si" || dec == "s" || dec == "SI"){
@@ -40,6 +57,7 @@ bool Table::AddCard(const int& i, const Card& card){
 			return true;
 		}
 		else {
+			std::cout << "Carta "<< card << "reinserita nelle carte sul tavolo nel mazzaetto "<<i<<std::endl;
 			return false;
 		}
 	}
@@ -49,7 +67,7 @@ void Table::AddCard(const Card& card){
 	table[++n_set].push_back(card);
 }
 
-bool Table::FindCard(const int& i, const Card& card) {
+bool Table::FindCard(const int& i, const Card& card){
 	std::vector<Card>::const_iterator iter = table[i].begin();
 	for(; iter != table[i].end() ; ++iter){ 
 		if(*iter == card){

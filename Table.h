@@ -55,6 +55,9 @@ class Table{
 		// se l'ha trovata 
 		bool FindCard(const int& i, const Card& card);
 		
+		// Metodo che sistema il tavolo (toglie i mazzretti vuti)
+		bool UpdateTable();
+		
 		// Metodo che controlla se il tavolo e' vuoto
 		bool Empty() const;
 		

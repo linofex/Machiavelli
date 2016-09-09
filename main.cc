@@ -1,4 +1,5 @@
 #include "Machiavelli.h"
+#include "PlayerHuman.h"
 
 int main(){
 	Deck deck;
@@ -8,12 +9,13 @@ int main(){
 	std::cout << "Inserisci il numero di giocatori: ";
 	std::cin >> num;
 	std::cin.ignore();
-	for(int i = 0 ; i < num ; ++i){
+	for(int i = 1 ; i <= num ; ++i){
 		std::string name;
 		std::cout << "Inserire il nome del giocatore " << i << std::endl;
 		getline(std::cin >> std::skipws, name);
-		players.push_back(new PlayerBase(name));
-	}	
+		players.push_back(new PlayerHuman(name));
+	}
+	std::cout << "\033[2J\033[1;1H";	
 	Machiavelli Game(players, deck, table);
 	Game.Game();
 	for(int i = 0 ; i < num ; ++i){

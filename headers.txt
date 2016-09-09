@@ -1,6 +1,13 @@
 #ifndef CARD_H
 #define CARD_H
 
+
+/*Questa classe realizza una carta da gioco di un mazzo di carte francese.
+il dato privato val e' utilizzato per rendere il confronto di carte piú agevole, 
+dando ad gni carta un valore numerico da 1 a 13. L'asso puo' avere due valori, 1
+oppure 14, dato che puo' stare anche alla destra di un K in una scala.
+*/
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -10,6 +17,7 @@ class Card{
 		std::string suit;
 		int val;
 	public:
+		// Costruttore
 		Card(const std::string& value_, const std::string& suit_):
 			value(value_), suit(suit_){
 			if (value.compare("A") == 0) val = 1;
@@ -17,24 +25,52 @@ class Card{
 			else if (value.compare("Q") == 0) val = 12;
 			else if (value.compare("J") == 0) val = 11;
 			else {
+				// Conversione da string a int (c++11 ha stoi)
 				std::stringstream stoi(value);
 				stoi >> val;
 			}
 		}
-		inline std::string GetValue() const {return value;}
-		inline std::string GetSuit() const {return suit;}
-		inline int GetIntValue() const {return val;}
+		// Metodo che ritorna il valore della carta
+		inline std::string GetValue() const {
+			return value;
+		}
+		
+		// Metodo che ritorna il seme della carta
+		inline std::string GetSuit() const {
+			return suit;
+		}
+		
+		// Metodo che ritorna il valore numerico della carta
+		inline int GetIntValue() const {
+			return val;
+		}
+		
+		// Metodo statico che compara il valore di due carte
 		static bool CompareValue(const Card& left, const Card& right);
+		
+		// Metodo statico che compara il seme di due carte
 		static bool CompareSuit(const Card& left, const Card& right);
 		
 };
 
+// Operatore che confronta se due carte sono uguali
 bool operator==(const Card& left, const Card& right);
+
+// Operatore che stampa una carta
 std::ostream& operator<<(std::ostream& out, const Card& card);
+
+// Operatore che confronta due carte
 bool operator<(const Card& left, const Card& right);
+
 #endif
 #ifndef DECK_H
 #define DECK_H
+
+/*Questa classe realizza un mazzo di carte da gioco francesi.
+La presenza di due costruttori é dovuta al fatto che magari un utente vuole
+giocare con delle carte che rispettino il solito formato di una carta, ma che 
+hanno un design diverso, magari con i semi in altre lingue. 
+*/
 
 #include <vector>
 #include <string>
@@ -43,12 +79,11 @@ bool operator<(const Card& left, const Card& right);
 #include "PlayerBase.h"
 #include "Card.h"
 
-class PlayerBase;
 class Deck{
 	private:
 		std::vector<Card> deck;
 	public:
-		/* Default constructor fills the deck reading cards from the file deck.txt */
+		// Costruttore che legge il mazzo di default 
 		Deck(){ 										  
 			std::ifstream is("./Deck.txt");
 			if(!is.good()){
@@ -62,7 +97,8 @@ class Deck{
 				deck.push_back(card);
 			}
 		}
-		/* Constructor fills the deck reading a different default deck file */
+		
+		// Costruttore che legge un mazzo personale
 		Deck(const std::string& deck_){ 										  
 			std::ifstream is(deck_.c_str());
 			if(!is.good()){
@@ -77,21 +113,27 @@ class Deck{
 			}
 		}
 		
-		/* This method shuffles the deck */
+		// Questo metodo mescola il mazzo 
 		void Shuffle();	
-		/* This method returns a card to a player */
+		
+		// Questo metodo toglie una carta dal mazzo e la ritorna 
 		inline Card GetCard (){ 
 			Card card = deck.back();
 			deck.pop_back();
 			return card;
 		}
-		/* This method control if the deck is empty */
+		// Questo metodo controlla se il mazzo é vuoto
 		bool Empty() const;
 };
 
 #endif
 #ifndef MACHIAVELLI_H
 #define MACHIAVELLI_H
+
+/* Questa classe realizza il gioco di carte Machiavelli (le regole si possono 
+trovare nel README.md. La classe e' formata dagli ingredienti che servono per 
+giocare. Il metodo Game() e' la partita vera e propria.*/
+
 
 #include <vector>
 #include "Deck.h"
@@ -104,14 +146,23 @@ class Machiavelli{
 		std::vector<PlayerBase*> players;
 		Deck deck;
 		Table table;
+		
+		// Metodi provati che servono per la verifica della mossa
 		bool CheckMove(const t_map& table)const;
 		bool IsTris(const std::vector<Card>& cards ) const ;
 		bool IsStraight(const std::vector<Card>& cards ) const;
 	public:
-		Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_ ):players(players_), deck(deck_), table(table_){}
+		// Costruttore che inizializza il gioco
+		Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_ ):
+								players(players_), deck(deck_), table(table_){}
+		
+		// Metodo che distribuisce le carte
 		void DealCards();
-		//bool CheckMove(const Table& table);
+		
+		// Metodo che esegue la mossa
 		bool Move(PlayerBase* player_);
+		
+		// Metodo che esegue il gioco.
 		void Game();
 };
 //Machiavelli1
@@ -120,6 +171,10 @@ void PrintOp1();
 #endif
 #ifndef PLAYERBASE_H
 #define PLAYERBASE_H
+
+/* Questa classe realizza un giocatore base, cioe' una classe astratta che e' padre
+di una classe giocatore umano e una classe giocatore CPU. Un giocatore ha un nome
+e le carte nella propria mano. E' possibile inserire, rimuovere, mesolarle, vederle */
 
 #include <string>
 #include <vector>
@@ -142,42 +197,55 @@ class PlayerBase{
 			n_player++;
 		}
 		
-		/* Constructor */
+		/* Costruttore */
 		PlayerBase(const std::string& name_):name(name_){n_player ++;}
 		
-		/* This method add a card, picked from the deck (in Machiavelli's class)*/
+		/* Metodo che aggiunge una carta al giocatore*/
 		virtual void AddCard(const Card& card);
 		
-		/* This method remove a card*/
+		/* Metodo che rimuove un carta */
 		virtual void RemoveCard(const Card& card);
 
-		/* This method sort the cards*/
+		/* Metodo che ordina le carte in mano */
 		virtual void SortCard();
 
 		/* This method return the name of the player */
 		virtual std::string GetName() const;
 		
-		/* This method set a deck of cards*/
+		/* Metodo che inserisce un insieme di carte preciso */
 		virtual void SetCards(const std::vector<Card>& cards);
 		
-		/*This method return the deck of cards*/
-		virtual std::vector<Card> GetCards() const;
+		/* Metodo che ritorna il mazzetto di carte */
+		virtual const std::vector<Card>& GetCards() const;
 		
-		/* This method prints the cards */
+		/* Metodo che stampa le carte */
 		virtual void SeeCards() const;
 				
-		/* This method look if the player hasn't got cards */
+		/* Metodo che controlla se il giocatore ha ancora carte */
 		virtual bool Empty() const;
 		
-		/* This method search if you have the card */
+		/*  Metodo che cerca una carta */
 		virtual bool FindCard(const Card& card) const;
-		/* Destructor */
+		/* Distruttore */
 		// virtual ~PlayerBase(){}
 };
 
 #endif
+#include "PlayerBase.h"
+
+class PlayerHuman : public PlayerBase {
+	public:
+		PlayerHuman():PlayerBase(){}
+		PlayerHuman(const std::string& name_):PlayerBase(name_){}
+};
+	
 #ifndef TABLE_H
 #define TABLE_H
+
+/*Questa classe realizza un tavolo in cui ci sono le combinazioni di carte. 
+E' possibile stampare il tavolo, inserirne un altro,  rimuovere e aggiungere 
+singole carte.
+*/
 
 #include <map>
 #include <vector>
@@ -189,26 +257,51 @@ class Table{
 	private:
 		
 		t_map table;
-		int n_set; //Optional
+		int n_set; // variabile che tiene il conto dei mazzetti 
 	public:
-		Table(const t_map& table_):table(table_), n_set(0){
-			t_map::const_iterator iter = table.begin();
-			while(iter != table.end()){
-				n_set++;
-			}
-		}
+		// Costruttore di default 
 		Table():n_set(0){}
-		void PrintTable() const;
-		inline t_map GetTable(){ return table; }
-		void SetTable(const t_map& table_);
-		void AddCard(const Card& card );
-		bool AddCard(const int& i, const Card& card);
-		bool RemoveCard(const int& i, const Card& card);
-		bool FindCard(const int& i, const Card& card);
-		bool Empty() const;
-		inline void UpdateTable(const t_map& table_){ 
-			table = table_;
+		// Costruttore che prende in input un tavolo giá fatto
+		Table(const t_map& table_):table(table_){
+			n_set = table.size();
 		}
+		// Metodo che stampa il tavolo
+		void PrintTable() const;
+		
+		// Getter che ritorna il tavolo
+		inline const t_map& GetTable() const { 
+			return table; 
+		}
+		
+		//Getter che ritorna il numero di mazzetti
+		inline int GetNset()const{
+			return n_set;
+		}
+		
+		// Setter che setta il tavolo
+		void SetTable(const t_map& table_);
+		
+		// Metodo che aggiunge una carta ad un nuovo mazzetto
+		void AddCard(const Card& card );
+		
+		// Metodo che aggiunge una carta ad un mazzetto i e ritorna
+		// se l'ha aggiunta o meno
+		bool AddCard(const int& i, const Card& card);
+		
+		// Metodo che rimuove una carta da un mazzetto i e ritorna
+		// se l'ha rimosso o meno
+		bool RemoveCard(const int& i, const Card& card);
+		
+		// Metodo che cerca una carta in un mazzetto i e ritorna 
+		// se l'ha trovata 
+		bool FindCard(const int& i, const Card& card);
+		
+		// Metodo che sistema il tavolo (toglie i mazzretti vuti)
+		bool UpdateTable();
+		
+		// Metodo che controlla se il tavolo e' vuoto
+		bool Empty() const;
+		
 };
 
 #endif

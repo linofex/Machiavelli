@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-int PlayerBase::n_player =  0;
+int PlayerBase::n_player =  1;
 
 void PlayerBase::AddCard(const Card& card){
 	cards.push_back(card);

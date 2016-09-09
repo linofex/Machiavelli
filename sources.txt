@@ -1,3 +1,66 @@
+#include "Card.h"
+
+
+bool Card::CompareValue(const Card& left, const Card& right) {
+	if(left.GetValue() == right.GetValue()) {
+		return true;
+	}
+	return false;
+}
+
+bool Card::CompareSuit(const Card& left, const Card& right){
+	if(left.GetSuit() == right.GetSuit()) { 
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const Card& left, const Card& right){
+	if(Card::CompareValue(left, right) && Card::CompareSuit(left, right)) {
+		return true;
+	}
+	return false;
+}
+
+std::ostream& operator<<(std::ostream& out, const Card& card){
+	std::string utf8;
+	if(card.GetSuit() == "f"){ utf8 = "\u2663";}
+	else if(card.GetSuit() == "p") {utf8 = "\u2660";}
+	else if(card.GetSuit() == "c") {utf8 = "\u2665";}
+	else if(card.GetSuit() == "q"){utf8 = "\u2666";}
+	else {utf8 = card.GetSuit();}
+	out << card.GetValue() << utf8 << " ";
+	return out;
+}
+
+
+bool operator<(const Card& left, const Card& right){
+	if(left.GetIntValue() == right.GetIntValue()){
+		return (left.GetSuit() < right.GetSuit());
+	}
+	else{
+		return left.GetIntValue() < right.GetIntValue();
+	}
+}
+
+
+
+#include "Deck.h"
+#include <algorithm>
+#include <ctime>        // per time()
+#include <cstdlib>      // persrand
+
+void Deck::Shuffle(){
+	std::srand ((std::time(0)));
+	random_shuffle(deck.begin(), deck.end());
+}
+	
+bool Deck::Empty () const{
+	return deck.size() == 0;
+}
+
+
+
 #include "Machiavelli.h"
 #include <iostream> 
 #include <cstdlib>
@@ -334,3 +397,189 @@ void Machiavelli::Game(){
 	}
 	return;
 }
+#include "Machiavelli.h"
+#include "PlayerHuman.h"
+
+int main(){
+	Deck deck;
+	Table table;
+	std::vector<PlayerBase*> players;
+	int num;
+	std::cout << "Inserisci il numero di giocatori: ";
+	std::cin >> num;
+	std::cin.ignore();
+	for(int i = 1 ; i <= num ; ++i){
+		std::string name;
+		std::cout << "Inserire il nome del giocatore " << i << std::endl;
+		getline(std::cin >> std::skipws, name);
+		players.push_back(new PlayerHuman(name));
+	}
+	std::cout << "\033[2J\033[1;1H";	
+	Machiavelli Game(players, deck, table);
+	Game.Game();
+	for(int i = 0 ; i < num ; ++i){
+         	delete players[i];
+        }
+}
+
+#include "PlayerBase.h"
+#include <iostream>
+#include <algorithm>
+
+int PlayerBase::n_player =  1;
+
+void PlayerBase::AddCard(const Card& card){
+	cards.push_back(card);
+	std::sort(cards.begin(), cards.end());
+	}
+
+void PlayerBase::SeeCards() const {
+	for(int i = 0; i < cards.size(); ++i){
+		std::cout << cards[i];
+	}
+	std::cout << std::endl;
+}
+
+bool  PlayerBase::FindCard(const Card& card) const{
+	std::vector<Card>::const_iterator iter = cards.begin();
+	for (; iter != cards.end(); ++iter){
+		if(*iter == card){
+			return true;
+		}
+	}
+	return false;
+}
+
+bool PlayerBase::Empty()const{
+	return cards.size() == 0;
+}
+
+std::string PlayerBase::GetName() const {
+	return name;
+}
+
+	
+void PlayerBase::RemoveCard(const Card& card){
+	std::vector<Card>::iterator iter = cards.begin();
+	for (; iter != cards.end(); ++iter){
+		if(*iter == card){
+			cards.erase(iter);
+			return;
+		}
+	}
+}
+
+void PlayerBase::SetCards(const std::vector<Card>& cards_){
+	cards = cards_;
+}
+
+void PlayerBase::SortCard(){
+	sort(cards.begin(), cards.end());
+}   
+
+
+const std::vector<Card>& PlayerBase::GetCards() const{
+	return cards;
+}
+#include "Table.h"
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+void Table::PrintTable() const {
+	if(table.empty()){
+		return;
+	}
+	std::cout << "Tavolo:" << std::endl;
+	t_map::const_iterator iter = table.begin(); 
+	for(; iter != table.end(); ++iter){
+		if(!(iter->second.empty())){
+			std::cout<<"Mazzetto: " << iter->first<< std::endl;
+			std::vector<Card>::const_iterator it = iter->second.begin();
+			for(; it != iter->second.end(); ++it ){
+			std::cout << *it;
+			}
+		std::cout<<std::endl;
+		std::cout<<std::endl;
+		}
+	}
+}
+
+bool Table::UpdateTable(){
+	if(table.empty()){
+		return true;
+	}
+	t_map::iterator iter = table.begin(); 
+	for(; iter != table.end(); ++iter){
+		if((iter->second.empty())){
+			table.erase(iter);
+		}
+	
+	}
+	return true;
+}
+
+
+bool Table::Empty() const {
+	return table.empty();
+}
+
+
+bool Table::AddCard(const int& i, const Card& card){
+	t_map::iterator iter = table.find(i);
+	if (iter != table.end()){
+		table[i].push_back(card);
+		return true;
+	}
+	else{
+		std::cout << "Mazzetto non trovato, crearne uno nuovo? (s/n) => ";
+		std::string dec;
+		std::cin>>dec;
+		if(dec == "si" || dec == "s" || dec == "SI"){
+			this->AddCard(card);
+			return true;
+		}
+		else {
+			std::cout << "Carta "<< card << "reinserita nelle carte sul tavolo nel mazzaetto "<<i<<std::endl;
+			return false;
+		}
+	}
+}
+
+void Table::AddCard(const Card& card){
+	table[++n_set].push_back(card);
+}
+
+bool Table::FindCard(const int& i, const Card& card){
+	std::vector<Card>::const_iterator iter = table[i].begin();
+	for(; iter != table[i].end() ; ++iter){ 
+		if(*iter == card){
+			return true;
+		}
+	}
+	return false;	
+}
+
+bool Table::RemoveCard(const int& i, const Card& card){
+	t_map::iterator iter = table.find(i);
+	if (iter != table.end()){
+		std::vector<Card>::iterator it = table[i].begin();
+		for(; it!= table[i].end(); ++it){
+			if (*it == card){
+				table[i].erase(it);
+				return true;
+			}
+		}
+	}
+	else {
+		std::cout << "Carta non presente";
+		return false;
+	}
+			
+}
+
+void Table::SetTable(const t_map& table_){
+	table = table_;
+	n_set = table.size();
+}
+

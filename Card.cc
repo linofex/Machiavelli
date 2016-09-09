@@ -1,5 +1,6 @@
 #include "Card.h"
 
+
 bool Card::CompareValue(const Card& left, const Card& right) {
 	if(left.GetValue() == right.GetValue()) {
 		return true;
@@ -22,7 +23,13 @@ bool operator==(const Card& left, const Card& right){
 }
 
 std::ostream& operator<<(std::ostream& out, const Card& card){
-	out << card.GetValue() << card.GetSuit()<< " ";
+	std::string utf8;
+	if(card.GetSuit() == "f"){ utf8 = "\u2663";}
+	else if(card.GetSuit() == "p") {utf8 = "\u2660";}
+	else if(card.GetSuit() == "c") {utf8 = "\u2665";}
+	else if(card.GetSuit() == "q"){utf8 = "\u2666";}
+	else {utf8 = card.GetSuit();}
+	out << card.GetValue() << utf8 << " ";
 	return out;
 }
 
