@@ -111,7 +111,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 			std::cout <<"Nuova carta aggiunta al tuo mazzo di carte.\n";
 		}
 		return true;
-		//std::cout << "\033[2J\033[1;1H";
+		std::cout << "\033[2J\033[1;1H";
 	}
 	else{
 		bool move_flag = false; //flag che evita mossa senza inserire carte
@@ -244,34 +244,6 @@ bool Machiavelli::Move(PlayerBase* player_){
 				player_->SetCards(old_cards);
 				std::cout << "Tavolo e carte ripristinate\n";				
 			}
-/*
-				std::string value;
-				std::string suit;
-				int num; 
-				std::cout << "\nScegliere in ordine: il numero del mazzo (o aggiungine uno) e la carta da prendere.\n";
-				std::cin >> num >> value >> suit;
-				Card card(value, suit);
-				if (!table.FindCard(num, card)){
-					std::cout << "\nSul tavolo non c'e' la carta scelta, riprova."<< std::endl;
-				}
-				else{
-					if(table.RemoveCard(num, card)){
-						std::cout<< "\nCarta rimossa correttamente dal mazzetto." << num << std::endl;
-						table.PrintTable();
-					}
-					else{
-						continue;
-					}
-					std::cout << "\nScegli mazzetto dove inserirla:\n";
-					std::cin >> num;
-					if(table.AddCard(num, card)){
-						std::cout << "\nCarta aggiunta correttamente al mazzetto "<< num << std::endl;
-						change_flag = true;
-						table.PrintTable();
-					}
-				}
-			}
-*/ 
 		}while(move !="passo");
 		//table.UpdateTable(); // Cancella mazzi vuoti		
 		std::cout << "\033[2J\033[1;1H";
