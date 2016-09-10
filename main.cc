@@ -13,7 +13,12 @@ int main(){
 		std::string name;
 		std::cout << "Inserire il nome del giocatore " << i << std::endl;
 		getline(std::cin >> std::skipws, name);
-		players.push_back(new PlayerHuman(name));
+		if(name.size() == 0){
+			players.push_back(new PlayerHuman());
+		}
+		else {
+			players.push_back(new PlayerHuman(name));
+		}
 	}
 	std::cout << "\033[2J\033[1;1H";	
 	Machiavelli Game(players, deck, table);

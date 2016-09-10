@@ -15,6 +15,11 @@ bool Card::CompareSuit(const Card& left, const Card& right){
 	return false;
 }
 
+void Card::SetIntValue(const int& val_){
+	val = val_;
+}
+
+
 bool operator==(const Card& left, const Card& right){
 	if(Card::CompareValue(left, right) && Card::CompareSuit(left, right)) {
 		return true;

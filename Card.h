@@ -1,7 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
 
-
 /*Questa classe realizza una carta da gioco di un mazzo di carte francese.
 il dato privato val e' utilizzato per rendere il confronto di carte piú agevole, 
 dando ad gni carta un valore numerico da 1 a 13. L'asso puo' avere due valori, 1
@@ -34,6 +33,10 @@ class Card{
 		inline std::string GetValue() const {
 			return value;
 		}
+
+		// Setter che setta il valore intero della carta
+		void SetIntValue(const int& val_);
+
 		
 		// Metodo che ritorna il seme della carta
 		inline std::string GetSuit() const {

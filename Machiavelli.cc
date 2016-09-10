@@ -2,6 +2,7 @@
 #include <iostream> 
 #include <cstdlib>
 
+
 void PrintOp(){
 	std::cout << "\n*****************************************" << std::endl;
 	std::cout << "* Digita \t  \t  \t \t*\n*\t\"passo\" per passare\t \t*\n*\t\"mossa\" per fare una mossa \t*" << std::endl;
@@ -105,6 +106,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 			std::cout << "\nIl mazzo e' vuoto, passi senza pescare carte.\n";
 		}
 		else {
+		        std::cout << "\033[2J\033[1;1H";
 			player_->AddCard(deck.GetCard());
 			std::cout <<"Nuova carta aggiunta al tuo mazzo di carte.\n";
 		}
