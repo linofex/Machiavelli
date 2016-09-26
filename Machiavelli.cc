@@ -15,7 +15,7 @@ void PrintOp1(){
 	std::cout << "* Digita \t\t\t\t\t\t\t*\n*\t\"passo\"   per passare \t\t\t\t\t*\n*\t\"prendi\"  per prendere una carta e cambiarla di posto \t* \n*\t\"ins\"\t  per inserire una carta \t\t\t*\n*\t\"esc\"\t  per riniziare la mossa\t\t\t*"<< std::endl;
 	std::cout << "*****************************************************************\n" << std::endl;
 }
-
+//ciao
 
 int ChooseNum(){
 	bool flag = false;
