@@ -2,17 +2,11 @@
 
 
 bool Card::CompareValue(const Card& left, const Card& right) {
-	if(left.GetValue() == right.GetValue()) {
-		return true;
-	}
-	return false;
+	return (left.GetValue() == right.GetValue());
 }
 
 bool Card::CompareSuit(const Card& left, const Card& right){
-	if(left.GetSuit() == right.GetSuit()) { 
-		return true;
-	}
-	return false;
+	return(left.GetSuit() == right.GetSuit());
 }
 
 void Card::SetIntValue(const int& val_){

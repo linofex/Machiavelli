@@ -18,11 +18,11 @@ class PlayerBase{
 		
 	public:
 		PlayerBase(){
-			std::string name_;
+			//std::string name_;
 			std::stringstream int2string;
 			int2string << n_player;
-			name_ = int2string.str();
-			name = name_;
+			//name_ = int2string.str();
+			name = int2string.str();
 			n_player++;
 		}
 		

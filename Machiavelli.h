@@ -12,6 +12,7 @@ giocare. Il metodo Game() e' la partita vera e propria.*/
 #include "PlayerBase.h"
 #include "Card.h" 
 
+
 class Machiavelli{
 	private:
 		std::vector<PlayerBase*> players;
@@ -19,13 +20,13 @@ class Machiavelli{
 		Table table;
 		
 		// Metodi provati che servono per la verifica della mossa
-		bool CheckMove(const t_map& table)const;
+		bool CheckMove();
 		bool IsTris(const std::vector<Card>& cards ) const ;
 		bool IsStraight(const std::vector<Card>& cards ) const;
 	public:
 		// Costruttore che inizializza il gioco
-		Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_ ):
-								players(players_), deck(deck_), table(table_){}
+		Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_):
+							       players(players_), deck(deck_), table(table_){}
 		
 		// Metodo che distribuisce le carte
 		void DealCards();
@@ -36,7 +37,9 @@ class Machiavelli{
 		// Metodo che esegue il gioco.
 		void Game();
 };
-//Machiavelli1
+
+
 void PrintOp();
 void PrintOp1();
+int ChooseNum();
 #endif

@@ -6,8 +6,10 @@ int main(){
 	Table table;
 	std::vector<PlayerBase*> players;
 	int num;
-	std::cout << "Inserisci il numero di giocatori: ";
-	std::cin >> num;
+	do{
+		std::cout << "Inserisci il numero di giocatori (da 2 a 8): ";
+		num = ChooseNum();
+	}while(num < 2 || num > 8);
 	std::cin.ignore();
 	for(int i = 1 ; i <= num ; ++i){
 		std::string name;
