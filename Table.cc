@@ -106,7 +106,7 @@ bool Table::AddCard(const int& i, const Card& card){
 			return true;
 		}
 		else {
-			std::cout << "Carta "<< card << "reinserita nelle carte sul tavolo nel mazzaetto "<<i<<std::endl;
+			std::cout << "Carta "<< card << "reinserita nella posizione precedente. "<<i<<std::endl;
 			return false;
 		}
 	}

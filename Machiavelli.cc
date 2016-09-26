@@ -23,8 +23,6 @@ int ChooseNum(){
 		std::cin >> num;
 		if (!std::cin.good()) {
      			std::cin.clear();
-        		//std::string ignore;
-        		//std::cin >> ignore;
        			while(getchar() != '\n');				
        			continue;
     		}
@@ -105,7 +103,6 @@ bool Machiavelli::CheckMove(){
 	while(iter.HasNext()){
 		Table::icards c = iter.GetNext();
 		if(c.change_){
-			//std::cout<< "check"<< std::endl;
 			iter.SetChangeF();
 			if(!(this->IsTris(*(c.cards_))) && !(this->IsStraight((*c.cards_)))) {
 				return false;
@@ -118,7 +115,6 @@ bool Machiavelli::CheckMove(){
 
 // metodo che fa la mossa
 bool Machiavelli::Move(PlayerBase* player_){
-	//std::cout << "\033[2J\033[1;1H";
 	std::cout << "\nTurno del giocatore: "<< player_->GetName() << std::endl;
 	if(!table.Empty()){
 		table.PrintTable();
@@ -130,18 +126,19 @@ bool Machiavelli::Move(PlayerBase* player_){
 		PrintOp();
 		std::cin >> move;
 	}while(move !="mossa"  && move != "passo");
+	std::cout << "\033[2J\033[1;1H";
 	if (move=="passo"){
 		if(deck.Empty()){
 			std::cout << "\nIl mazzo e' vuoto, passi senza pescare carte.\n";
 		}
 		else {
-		        std::cout << "\033[2J\033[1;1H";
 			Card dcard = deck.GetCard();
 			player_->AddCard(dcard);
 			std::cout <<"La carta "<< dcard << " e' stata aggiunta al tuo mazzo di carte.\n";
 		}
+
 		return true;
-		std::cout << "\033[2J\033[1;1H";
+
 	}
 	else{
 		bool move_flag = false; //flag che evita mossa senza inserire carte
@@ -196,20 +193,11 @@ bool Machiavelli::Move(PlayerBase* player_){
 						std::cout << "Scegliere il mazzetto dove inserire la carta: " << card << "=> ";
 						int num = ChooseNum();
 						if(table.AddCard(num , card)){
-						//	std::cout << "\nCarta inserita correttamente e tolta dalle carte che hai in mano. \n";
 		                                        player_->RemoveCard(card);
 		                                        move_flag = true;
 						}
 					}
 				}
-				/*
-				if(table.Empty()){
-				std::cout << "\nTavolo vuoto\n";
-				}
-				else{
-					table.PrintTable();
-				}
-				*/
 			}
 			else if (move == "prendi") {
 				if(table.Empty()){
