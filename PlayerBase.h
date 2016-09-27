@@ -18,10 +18,8 @@ class PlayerBase{
 		
 	public:
 		PlayerBase(){
-			//std::string name_;
 			std::stringstream int2string;
 			int2string << n_player;
-			//name_ = int2string.str();
 			name = int2string.str();
 			n_player++;
 		}
@@ -38,7 +36,7 @@ class PlayerBase{
 		/* Metodo che ordina le carte in mano */
 		virtual void SortCard();
 
-		/* This method return the name of the player */
+		/* Metodo che ritorna il nome del giocatore */
 		virtual std::string GetName() const;
 		
 		/* Metodo che inserisce un insieme di carte preciso */

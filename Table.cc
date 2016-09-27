@@ -14,7 +14,7 @@ void Table::PrintTable() const {
 			std::cout<<"Mazzetto " << iter->first<< ": ";
 			std::vector<Card>::const_iterator it = iter->second.cards.begin();
 			for(; it != iter->second.cards.end(); ++it ){
-			std::cout << *it;
+				std::cout << *it;
 			}
 		std::cout<<std::endl;
 		std::cout<<std::endl;
@@ -26,44 +26,47 @@ void Table::SetStraight(std::vector<Card>* cards){
 	if(cards->size() < 3) {
 		return;
 	}
-	for(int i = 1; i < cards->size(); ++i) {
-		if(!Card::CompareSuit((*cards)[0], (*cards)[i])) {
-			return;
-		}
-	}	
+
 	//flags
 	int pos_first_ace = -1;
 	int pos_second_ace = -1;
-	int flag_k = 0;
-	int flag_two = 0;
+	bool flag_k = false;
+	bool flag_two = false;
 	
-	//
+	// Ciclo for che conta Assi, K e 2
 	for(int i = 0; i < cards->size(); ++i) {
+		// se la carta é un asso e ce ne e' giá uno, aggiungi il secondo
 		if(((*cards)[i].GetValue() == "A") && pos_first_ace == -1) {
 			pos_first_ace = i;
 		}
+		// Indice primo asso
 		else if((*cards)[i].GetValue() == "A") {
 			pos_second_ace = i;
 		}
+		// Presenza di K
 		else if((*cards)[i].GetIntValue() == 13) {
-			flag_k = 1;
+			flag_k = true;
 		}
+		//Presenza di 2
 		else if((*cards)[i].GetIntValue() == 2) {
-			flag_two = 1;
+			flag_two = true;
 		}
 	}
 	
+	// questo blocco di codice setta il valore numerico dell'asso a 14 se
+	// ce ne sono 2, uno viene setta a 14, se ne é solo uno, viene messo a 14
+	// solo se c'é un k
 	if(pos_first_ace != -1) {
 		if(pos_second_ace != -1) {
 			(*cards)[pos_second_ace].SetIntValue(14);
 		}
-		else if(flag_k == 1) {
+		else if(flag_k) {
 			(*cards)[pos_first_ace].SetIntValue(14);
 		}
 	}
+	//Ordine della scala
 	std::sort(cards->begin(), cards->end());
 }
-
 
 
 void Table::UpdateTable(){
@@ -73,10 +76,9 @@ void Table::UpdateTable(){
 	t_map::iterator iter = table.begin(); 
 	for(; iter != table.end(); ++iter){
 		if((iter->second.cards.empty())){
-			table.erase(iter);
+			table.erase(iter); //cancellare, sennó la mossa non é valida
 		}
 		else if (iter->second.change){
-			//std::cout<< "check Up"<< std::endl;
 			SetStraight(&(iter->second.cards));
 		}
 	
@@ -101,7 +103,7 @@ bool Table::AddCard(const int& i, const Card& card){
 		std::cout << "Mazzetto non trovato, crearne uno nuovo? (s/n) => ";
 		std::string dec;
 		std::cin>>dec;
-		if(dec == "si" || dec == "s" || dec == "SI"){
+		if(dec == "si" || dec == "s" || dec == "SI"|| dec == "S"){
 			this->AddCard(card);
 			return true;
 		}
@@ -117,9 +119,9 @@ void Table::AddCard(const Card& card){
 	table[n_set].change = true;
 }
 
-bool Table::FindCard(const int& i, const Card& card){
-	std::vector<Card>::const_iterator iter = table[i].cards.begin();
-	for(; iter != table[i].cards.end() ; ++iter){ 
+bool Table::FindCard(const int& i, const Card& card) const{
+	std::vector<Card>::const_iterator iter = table.at(i).cards.begin();
+	for(; iter != table.at(i).cards.end() ; ++iter){ 
 		if(*iter == card){
 			return true;
 		}
@@ -138,6 +140,7 @@ bool Table::RemoveCard(const int& i, const Card& card){
 				return true;
 			}
 		}
+		return false;
 	}
 	else {		
 		return false;

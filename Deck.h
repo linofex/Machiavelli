@@ -4,8 +4,7 @@
 /*Questa classe realizza un mazzo di carte da gioco francesi.
 La presenza di due costruttori é dovuta al fatto che magari un utente vuole
 giocare con delle carte che rispettino il solito formato di una carta, ma che 
-hanno un design diverso, magari con i semi in altre lingue. 
-*/
+hanno un design diverso, magari con i semi in altre lingue. */
 
 #include <vector>
 #include <string>

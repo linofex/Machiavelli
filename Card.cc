@@ -1,6 +1,5 @@
 #include "Card.h"
 
-
 bool Card::CompareValue(const Card& left, const Card& right) {
 	return (left.GetValue() == right.GetValue());
 }
