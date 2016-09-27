@@ -17,12 +17,15 @@ hanno un design diverso, magari con i semi in altre lingue.
 class Deck{
 	private:
 		std::vector<Card> deck;
+		bool pass;
 	public:
 		// Costruttore che legge il mazzo di default 
-		Deck(){ 										  
+		Deck():pass(true){ 										  
 			std::ifstream is("./Deck.txt");
 			if(!is.good()){
-				std::cerr << "ERROR! Can not open the file.\n";
+				std::cerr << "ERROR! Impossibile trovare il mazzo Deck.txt\n";
+				std::cerr << "Il gioco non puo' andare avanti!\n";
+				pass = false;
 				return;
 			}
 			std::string value;
@@ -34,10 +37,12 @@ class Deck{
 		}
 		
 		// Costruttore che legge un mazzo personale
-		Deck(const std::string& deck_){ 										  
+		Deck(const std::string& deck_):pass(true){ 										  
 			std::ifstream is(deck_.c_str());
 			if(!is.good()){
-				std::cerr << "ERROR! Can not open the file.\n";
+				std::cerr << "ERROR! Impossibile trovare il mazzo Deck.txt";
+				std::cerr << "Il gioco non puo' andare avanti!\n";
+				pass = false;
 				return;
 			}
 			std::string value;
@@ -56,6 +61,9 @@ class Deck{
 			Card card = deck.back();
 			deck.pop_back();
 			return card;
+		}
+		inline bool Pass(){
+			return pass;
 		}
 		// Questo metodo controlla se il mazzo é vuoto
 		bool Empty() const;

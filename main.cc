@@ -3,7 +3,9 @@
 
 int main(){
 	Deck deck;
-	Table table;
+	if(!deck.Pass()){
+		return 0;
+	}
 	std::vector<PlayerBase*> players;
 	int num;
 	do{
@@ -23,6 +25,7 @@ int main(){
 		}
 	}
 	std::cout << "\033[2J\033[1;1H";	
+	Table table;
 	Machiavelli Game(players, deck, table);
 	Game.Game();
 	for(int i = 0 ; i < num ; ++i){

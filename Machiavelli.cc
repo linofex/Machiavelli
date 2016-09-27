@@ -189,7 +189,8 @@ bool Machiavelli::Move(PlayerBase* player_){
 					if (!(player_->FindCard(card))){
 						std::cout <<  "La carta " << card << "non e' presente. "<< std::endl;
 					}
-					else if(player_->FindCard(card)) {
+				//	else if(player_->FindCard(card)) {
+					else{
 						std::cout << "Scegliere il mazzetto dove inserire la carta: " << card << "=> ";
 						int num = ChooseNum();
 						if(table.AddCard(num , card)){
