@@ -235,12 +235,12 @@ bool Machiavelli::Move(PlayerBase* player_){
 					bool flag = false;
 					std::cout << "Scegliere il mazzetto dove prendere la carta "<< card << "=> ";
 					int num = ChooseNum();
-					if (!(table.FindCard(num, card))){
-						std::cout <<  "La carta "<< card <<"scelta non e' presente nel mazzetto del tavolo."<< std::endl;
-					}
-					else {
+					//if (!(table.FindCard(num, card))){
+				//		std::cout <<  "La carta "<< card <<"scelta non e' presente nel mazzetto del tavolo."<< std::endl;
+				//	}
+				//	else {
 						if(!table.RemoveCard(num, card)){
-							std::cout << "Carta non presente";
+							std::cout << "La carta "<< card<<" non e' presente";
 							continue;
 						}
 						std::cout << "Scegli mazzetto dove inserire la carta: " << card << "=> ";
@@ -253,7 +253,7 @@ bool Machiavelli::Move(PlayerBase* player_){
 							table.AddCard(num, card);
 						}
 				
-					}
+					
 				}
 				
 			}
