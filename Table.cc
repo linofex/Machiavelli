@@ -59,7 +59,7 @@ void Table::SetStraight(std::vector<Card>* cards){
 	// ce ne sono 2, uno viene setta a 14, se ne é solo uno, viene messo a 14
 	// solo se c'é un k
 	if(pos_first_ace != -1) {
-		if(pos_second_ace != -1 && (*cards)[pos_first_ace].GetIntValue() == 1) {
+		if(pos_second_ace != -1) {
 			(*cards)[pos_second_ace].SetIntValue(14);
 		}
 		else if(flag_k) {
