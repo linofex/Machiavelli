@@ -2,9 +2,10 @@
 #define CARD_H
 
 /*Questa classe realizza una carta da gioco di un mazzo di carte francese.
-il dato privato val e' utilizzato per rendere il confronto di carte piú agevole, 
-dando ad gni carta un valore numerico da 1 a 13. L'asso puo' avere due valori, 1
-oppure 14, dato che puo' stare anche alla destra di un K in una scala.*/
+il dato privato val e' utilizzato per rendere il confronto di carte piú 
+agevole, dando ad gni carta un valore numerico da 1 a 13. L'asso puo' avere 
+due valori, 1 oppure 14, dato che puo' stare anche alla destra di un K 
+in una scala.*/
 
 #include <string>
 #include <iostream>
@@ -16,19 +17,11 @@ class Card{
 		int val;
 	public:
 		// Costruttore
-		Card(const std::string& value_, const std::string& suit_):
-			value(value_), suit(suit_){
-			if (value.compare("A") == 0) val = 1;
-			else if (value.compare("K") == 0) val = 13;
-			else if (value.compare("Q") == 0) val = 12;
-			else if (value.compare("J") == 0) val = 11;
-			else {
-				// Conversione da string a int (c++11 ha stoi), ma
-				// credo ci sia un bug
-				std::stringstream stoi(value);
-				stoi >> val;
-			}
-		}
+		Card(const std::string& value_, const std::string& suit_);
+		
+		// Metodo per controllare l'esistenza di una carta
+		bool Exist() const;
+		
 		// Metodo che ritorna il valore della carta
 		inline std::string GetValue() const {
 			return value;
@@ -49,7 +42,7 @@ class Card{
 		}
 		
 		// Metodo statico che compara il valore di due carte
-		static bool CompareValue(const Card& left, const Card& right) ;
+		static bool CompareValue(const Card& left, const Card& right);
 		
 		// Metodo statico che compara il seme di due carte
 		static bool CompareSuit(const Card& left, const Card& right);

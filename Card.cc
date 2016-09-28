@@ -1,5 +1,25 @@
 #include "Card.h"
 
+Card::Card(const std::string& value_, const std::string& suit_):
+	value(value_), suit(suit_){			
+	if (value.compare("A") == 0) val = 1;
+	else if (value.compare("K") == 0) val = 13;
+	else if (value.compare("Q") == 0) val = 12;
+	else if (value.compare("J") == 0) val = 11;
+	else {
+		// Conversione da string a int (c++11 ha stoi), 
+		// ma credo ci sia un bug
+		std::stringstream stoi(value);
+		stoi >> val;
+		if (val < 1 || val > 14 || (suit != "c" && suit != "p" && 
+					    suit != "q" && suit != "f" )) {
+			std::cout << "La carta " << value << suit << 
+				     " non esiste." << std::endl;
+			val = -1;
+		}
+	}
+}
+
 bool Card::CompareValue(const Card& left, const Card& right) {
 	return (left.GetValue() == right.GetValue());
 }
@@ -12,6 +32,12 @@ void Card::SetIntValue(const int& val_){
 	val = val_;
 }
 
+bool Card::Exist() const {
+	if (this->val == -1) {
+		return false;
+	}
+	return true;
+}
 
 bool operator==(const Card& left, const Card& right){
 	if(Card::CompareValue(left, right) && Card::CompareSuit(left, right)) {

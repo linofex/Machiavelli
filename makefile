@@ -25,8 +25,10 @@ main.o: main.cc
 #compilazione progetto
 machiavelli: Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main.o
 	${LD} -o machiavelli Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main.o
-	
+
+machiavelli_test: Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main_test.cc
+	${LD} -o machiavelli_test Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main_test.cc
 	
 #cancella tutto quello che é stato compilato
 clean :
-	rm -f *.o machiavelli
+	rm -f *.o machiavelli machiavelli_test

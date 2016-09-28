@@ -14,6 +14,7 @@ giocare. Il metodo Game() e' la partita vera e propria.*/
 
 
 class Machiavelli{
+	friend class MachiavelliTest;
 	private:
 		std::vector<PlayerBase*> players;
 		Deck deck;

@@ -14,43 +14,16 @@ hanno un design diverso, magari con i semi in altre lingue. */
 #include "Card.h"
 
 class Deck{
+	friend class TestDeck;
 	private:
 		std::vector<Card> deck;
 		bool pass;
 	public:
 		// Costruttore che legge il mazzo di default 
-		Deck():pass(true){ 										  
-			std::ifstream is("./Deck.txt");
-			if(!is.good()){
-				std::cerr << "ERROR! Impossibile trovare il mazzo Deck.txt\n";
-				std::cerr << "Il gioco non puo' andare avanti!\n";
-				pass = false;
-				return;
-			}
-			std::string value;
-			std::string suit;
-			while(is >> value >> suit){
-				Card card(value, suit);
-				deck.push_back(card);
-			}
-		}
+		Deck();
 		
 		// Costruttore che legge un mazzo personale
-		Deck(const std::string& deck_):pass(true){ 										  
-			std::ifstream is(deck_.c_str());
-			if(!is.good()){
-				std::cerr << "ERROR! Impossibile trovare il mazzo Deck.txt";
-				std::cerr << "Il gioco non puo' andare avanti!\n";
-				pass = false;
-				return;
-			}
-			std::string value;
-			std::string suit;
-			while(is >> value >> suit){
-				Card card(value, suit);
-				deck.push_back(card);
-			}
-		}
+		Deck(const std::string& deck_);
 		
 		// Questo metodo mescola il mazzo 
 		void Shuffle();	
@@ -66,6 +39,7 @@ class Deck{
 		}
 		// Questo metodo controlla se il mazzo é vuoto
 		bool Empty() const;
+		
 };
 
 #endif

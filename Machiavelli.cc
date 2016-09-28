@@ -94,7 +94,7 @@ bool Machiavelli::CheckMove(){
 	Table::Iterator iter(table);
 	while(iter.HasNext()){
 		Table::icards c = iter.GetNext();
-		if(c.change_){
+		if(c.change_ && c.cards_->size() > 0){
 			iter.SetChangeF();
 			if(!(this->IsTris(*(c.cards_))) && !(this->IsStraight((*c.cards_)))) {
 				return false;
@@ -171,7 +171,7 @@ bool Machiavelli::Move(const int i){
 				std::cout <<"Le carte scelte sono: "<< cards << "  Confermi? (s/n) => " ;
 				std::string dec;
 				std::cin >> dec;
-				if(dec == "no" || dec == "n" || dec == "NO"){
+				if(dec == "no" || dec == "n" || dec == "NO" || dec == "N"){
 					continue;
 				}
 				while(s >> value) {
@@ -181,10 +181,12 @@ bool Machiavelli::Move(const int i){
 					if (!(players[i]->FindCard(card))){
 						std::cout <<  "La carta " << card << "non e' presente. "<< std::endl;
 					}
-				//	else if(players[i]->FindCard(card)) {
 					else{
 						std::cout << "Scegliere il mazzetto dove inserire la carta: " << card << "=> ";
 						int num = ChooseNum();
+						if(num == -1){
+							continue;
+						}
 						if(table.AddCard(num , card)){
 		                                        players[i]->RemoveCard(card);
 		                                        move_flag = true;
@@ -228,14 +230,21 @@ bool Machiavelli::Move(const int i){
 					bool flag = false;
 					std::cout << "Scegliere il mazzetto dove prendere la carta "<< card << "=> ";
 					int num = ChooseNum();
+					if(num == -1){
+						continue;
+						}
 					if(!table.RemoveCard(num, card)){
-						std::cout << "La carta "<< card<<" non e' presente";
+						std::cout << "La carta "<< card<<" non e' presente\n";
 						continue;
 					}
 					std::cout << "Scegli mazzetto dove inserire la carta: " << card << "=> ";
 					int num_1 = ChooseNum();
+					if(num_1 == -1){
+						table.AddCard(num, card);
+						continue;
+					}
 					if(table.AddCard(num_1, card)){
-						std::cout << "\nCarta "<<card<<"aggiunta correttamente al mazzetto "<< num_1 << std::endl;
+						std::cout << "Carta "<<card<<"aggiunta correttamente al mazzetto "<< num_1 << std::endl;
 						change_flag = true;
 					}
 					else{

@@ -38,10 +38,12 @@ void Table::SetStraight(std::vector<Card>* cards){
 		// se la carta é un asso e ce ne e' giá uno, aggiungi il secondo
 		if(((*cards)[i].GetValue() == "A") && pos_first_ace == -1) {
 			pos_first_ace = i;
+			(*cards)[pos_first_ace].SetIntValue(1);
 		}
 		// Indice primo asso
 		else if((*cards)[i].GetValue() == "A") {
 			pos_second_ace = i;
+			(*cards)[pos_second_ace].SetIntValue(1);
 		}
 		// Presenza di K
 		else if((*cards)[i].GetIntValue() == 13) {
@@ -57,7 +59,7 @@ void Table::SetStraight(std::vector<Card>* cards){
 	// ce ne sono 2, uno viene setta a 14, se ne é solo uno, viene messo a 14
 	// solo se c'é un k
 	if(pos_first_ace != -1) {
-		if(pos_second_ace != -1) {
+		if(pos_second_ace != -1 && (*cards)[pos_first_ace].GetIntValue() == 1) {
 			(*cards)[pos_second_ace].SetIntValue(14);
 		}
 		else if(flag_k) {
@@ -75,10 +77,7 @@ void Table::UpdateTable(){
 	}
 	t_map::iterator iter = table.begin(); 
 	for(; iter != table.end(); ++iter){
-		if((iter->second.cards.empty())){
-			table.erase(iter); //cancellare, sennó la mossa non é valida
-		}
-		else if (iter->second.change){
+		 if (iter->second.change && !(iter->second.cards.empty()) ){
 			SetStraight(&(iter->second.cards));
 		}
 	
