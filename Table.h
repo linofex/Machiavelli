@@ -119,8 +119,7 @@ class Table{
 					return iter != itable->table.end();
 				}
 		};
-
-	friend class Iterator;	
+	//friend class Iterator;	
 };
 
 #endif

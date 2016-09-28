@@ -2,10 +2,10 @@
 
 Card::Card(const std::string& value_, const std::string& suit_):
 	value(value_), suit(suit_){			
-	if (value.compare("A") == 0) val = 1;
-	else if (value.compare("K") == 0) val = 13;
-	else if (value.compare("Q") == 0) val = 12;
-	else if (value.compare("J") == 0) val = 11;
+	if (value == "A") val = 1;
+	else if (value == "K") val = 13;
+	else if (value == "Q") val = 12;
+	else if (value == "J") val = 11;
 	else {
 		// Conversione da string a int (c++11 ha stoi), 
 		// ma credo ci sia un bug

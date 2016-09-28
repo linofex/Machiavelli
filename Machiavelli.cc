@@ -1,6 +1,5 @@
 #include "Machiavelli.h"
 #include <iostream> 
-#include <cstdlib>
 #include <algorithm>
 
 
@@ -16,6 +15,8 @@ void PrintOp1(){
 	std::cout << "*****************************************************************\n" << std::endl;
 }
 
+// Questa funzione serve per accertarsi che quando viene chiesto un numero, esso
+// non sia un qualcosa di diverso
 int ChooseNum(){
 	bool flag = false;
 	int num; 	
@@ -155,11 +156,9 @@ bool Machiavelli::Move(const int i){
 				std::string cards;
 				std::string value;
 				std::string suit;
-				int num;
 				table.PrintTable(); 
 				std::cout << "\nScegliere le carte da inserire => ";
-				std::cin.ignore();
-				std::getline(std::cin, cards);
+				std::getline(std::cin>>std::ws, cards);// non legge spazi prima
 				if(cards.size() == 0){
 					std::cout << "Carte non inserite." << std::endl;
 					continue;
@@ -206,8 +205,9 @@ bool Machiavelli::Move(const int i){
 				std::string value;
 				std::string suit;
 				std::cout << "\nScegliere la carte da prendere => ";
-				std::cin.ignore();
-				std::getline(std::cin, cards);
+				// std::ws toglie gli spazi prima della prima lettera
+				std::getline(std::cin>>std::ws, cards);
+				
 				if(cards.size() == 0){
 					std::cout << "Carte non inserite." << std::endl;
 					continue;

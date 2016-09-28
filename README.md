@@ -27,13 +27,15 @@ Il gioco da noi creato si svolge utilizzando il terminale del pc, durante la mos
 Oltre ai comandi descritti nei box é possibile anche digitare `esc` quando il gioco chiede le carte da *prendere/inserire*, cosí da riportare il gioco alla scelta della mossa da fare.
 Nel caso in cui il giocatore sbagli a confermare le giuste carte e ci siano delle carte che non voleva *prendere/inserire*, quando deve scegliere il mazzetto, digitando `-1`, salterà la carta.
 
+Quando si inserisce che non é mai stato creato, ne verrá creato uno numerato con il numero successo al numero dell'ultimo mazzetto.
+
 Una volta che il giocatore rimane senza carte, il gioco controlla che la mossa sia giusta e se lo é, lo termina; il giocatore ha vinto!
 
 **Come eseguire una mossa**
 
 Inizialmente il gioco chiederà se eseguire la mossa o passare il turno.
 Nel primo caso, apparirà un box in cui sono listate le possibili azioni:
-* "passo"   per passare 					
+* 	"passo"   per passare 					
 *	"prendi"  per prendere una carta e cambiarla di posto 	
 *	"ins"	  per inserire una carta 			
 *	"esc"	  per riniziare la mossa	

@@ -39,7 +39,7 @@ class Machiavelli{
 		void Game();
 };
 
-
+// Funzioni esterne per alleggerire la lettura del codice
 void PrintOp();
 void PrintOp1();
 int ChooseNum();
