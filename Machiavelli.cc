@@ -107,7 +107,7 @@ bool Machiavelli::CheckMove(){
 
 
 // metodo che fa la mossa
-bool Machiavelli::Move(const int i){
+bool Machiavelli::Move(const int& i){
 	std::cout << "\nTurno del giocatore: "<< players[i]->GetName() << std::endl;
 	if(!table.Empty()){
 		table.PrintTable();
@@ -147,7 +147,8 @@ bool Machiavelli::Move(const int i){
 				players[i]->SeeCards();
 				std::cout<<std::endl;
 				std::cin >> move;
-				std::cin.ignore(2, '\n'); //ignora due caratteri o il nw nel buffer
+				std::cin.ignore(1, '\n');  //ignora l'ipotetico spazio
+				// che si puó inserire per caso o il nw nel buffer
 				// cosí il getline per le carte non ha problemi
 				if(move != "prendi"  && move != "passo" != 0 && move !="ins" && move !="esc"){		
 					while(getchar() != '\n'); //non stampa tutte le volte il box se digito male				
