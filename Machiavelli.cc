@@ -25,15 +25,13 @@ int ChooseNum(){
 		if (!std::cin.good()) {
      			std::cin.clear();
        			while(getchar() != '\n');				
-       			continue;
     		}
-    		flag = true;
+    		else{
+    			flag = true;
+    		}
     	}while(!flag);
     	return num;
 }
-
-
-
 
 
 // metodo per distribuire le carte
@@ -92,11 +90,13 @@ bool Machiavelli::IsStraight(const std::vector<Card>& cards) const {
 
 // metodo che controlla la mossa del giocatore
 bool Machiavelli::CheckMove(){
-	Table::Iterator iter(table);
+	Table::Iterator iter(table); //iteratore della classe Table
 	while(iter.HasNext()){
 		Table::icards c = iter.GetNext();
-		if(c.change_ && c.cards_->size() > 0){
+		if(c.change_ && c.cards_->size() > 0){ //size >0 perché mazzetti vuoti rimangono
 			iter.SetChangeF();
+			std::cout << "* ";
+			
 			if(!(this->IsTris(*(c.cards_))) && !(this->IsStraight((*c.cards_)))) {
 				return false;
 			}
@@ -115,7 +115,8 @@ bool Machiavelli::Move(const int i){
 	std::cout << "Le tue carte: " << std::endl;
 	players[i]->SeeCards();
 	std::string move;
-	do {
+	// Box inserito per differenziare il passo e la mossa e evitare di allocare inutilmente 
+	do{
 		PrintOp();
 		std::cin >> move;
 	}while(move !="mossa"  && move != "passo");
@@ -138,7 +139,6 @@ bool Machiavelli::Move(const int i){
 		bool change_flag = false; // flag che non aggiorna il tavolo con passo dopo ins
 					 // senza che si faccia niente.
 		t_map old_table = table.GetTable(); //tavolo vecchio
-		int old_n_set = table.GetNset(); //n_set vecchi
 		std::vector<Card> old_cards = players[i]->GetCards(); //mazzo di carte in mano vecchio
 		do{
 			do {
@@ -155,12 +155,12 @@ bool Machiavelli::Move(const int i){
 			}while(move != "prendi"  && move != "passo" != 0 && move !="ins" && move !="esc");
 			
 			 if (move=="ins"){
-				std::string cards; //stringa con le carte inserite
+				std::string cards; //stringa per le carte inserite
 				table.PrintTable(); 
 				std::cout << "\nScegliere le carte da inserire => ";
 				std::getline(std::cin, cards);
 				// Questo ciclo while elimina gli spazi dentro getline
-				// cosí se inserisco uno spazio, la size rimane 
+				// cosí se inserisco uno spazio, la size rimane 0
 				while(cards[0] == ' '){
 					cards.erase(cards.begin());
 				}
@@ -194,7 +194,7 @@ bool Machiavelli::Move(const int i){
 						}
 						if(table.AddCard(num , card)){
 		                                        players[i]->RemoveCard(card);
-		                                        move_flag = true;
+		                                        move_flag = true; // flag mossa eseguita
 						}
 					}
 				}
@@ -253,7 +253,7 @@ bool Machiavelli::Move(const int i){
 						continue;
 					}
 					if(table.AddCard(num_1, card)){
-						std::cout << "Carta "<<card<<"aggiunta correttamente al mazzetto "<< num_1 << std::endl;
+						std::cout << "Carta "<<card<<"aggiunta correttamente al mazzetto "<< std::endl;
 						change_flag = true;
 					}
 					else{
@@ -269,13 +269,12 @@ bool Machiavelli::Move(const int i){
 				std::cout << "Tavolo e carte ripristinate\n";
 				change_flag = move_flag = false;				
 			}
-			table.UpdateTable(); // Cancella mazzi vuoti e ordina le scale
+			table.UpdateTable(); // ordina le scale
 			table.PrintTable(); //stampa il tavolo
 			if(players[i]->Empty()){
-				if(CheckMove()){
-					std::cout << "Il giocatore " << players[i]->GetName() << " vince!" << std::endl;
-					return true;
-				}
+				std::cout << "Il giocatore " << players[i]->GetName() << " vince!" << std::endl;
+				return true;
+				
 			}	
 		}while(move !="passo");
 		std::cout << "\033[2J\033[1;1H";
