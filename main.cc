@@ -9,5 +9,6 @@ int main(){
 	Machiavelli Game(deck, table);
 	std::cout << "\033[2J\033[1;1H";	
 	Game.Game();
+	return 0;
 }
 
