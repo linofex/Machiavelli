@@ -12,11 +12,11 @@ int main(){
 		std::cout << "Inserisci il numero di giocatori (da 2 a 8): ";
 		num = ChooseNum();
 	}while(num < 2 || num > 8);
-	std::cin.ignore();
+	std::cin.ignore();// ignora l'invio
 	for(int i = 1 ; i <= num ; ++i){
 		std::string name;
 		std::cout << "Inserire il nome del giocatore " << i << std::endl;
-		getline(std::cin >> std::skipws, name);
+		getline(std::cin, name);
 		if(name.size() == 0){
 			players.push_back(new PlayerHuman());
 		}

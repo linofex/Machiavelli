@@ -147,18 +147,23 @@ bool Machiavelli::Move(const int i){
 				players[i]->SeeCards();
 				std::cout<<std::endl;
 				std::cin >> move;
+				std::cin.ignore(2, '\n'); //ignora due caratteri o il nw nel buffer
+				// cosí il getline per le carte non ha problemi
 				if(move != "prendi"  && move != "passo" != 0 && move !="ins" && move !="esc"){		
-					while(getchar() != '\n');				
+					while(getchar() != '\n'); //non stampa tutte le volte il box se digito male				
 				}
 			}while(move != "prendi"  && move != "passo" != 0 && move !="ins" && move !="esc");
 			
 			 if (move=="ins"){
-				std::string cards;
-				std::string value;
-				std::string suit;
+				std::string cards; //stringa con le carte inserite
 				table.PrintTable(); 
 				std::cout << "\nScegliere le carte da inserire => ";
-				std::getline(std::cin>>std::ws, cards);// non legge spazi prima
+				std::getline(std::cin, cards);
+				// Questo ciclo while elimina gli spazi dentro getline
+				// cosí se inserisco uno spazio, la size rimane 
+				while(cards[0] == ' '){
+					cards.erase(cards.begin());
+				}
 				if(cards.size() == 0){
 					std::cout << "Carte non inserite." << std::endl;
 					continue;
@@ -166,13 +171,14 @@ bool Machiavelli::Move(const int i){
 				else if(cards == "esc"){
 					continue;
 				}
-				std::stringstream s(cards);
 				std::cout <<"Le carte scelte sono: "<< cards << "  Confermi? (s/n) => " ;
 				std::string dec;
 				std::cin >> dec;
 				if(dec == "no" || dec == "n" || dec == "NO" || dec == "N"){
 					continue;
-				}
+				}												  					std::stringstream s(cards); //stream per leggere le carte una alla volta
+				std::string value;
+				std::string suit;
 				while(s >> value) {
 					suit = value[value.size() -1];
 					value.erase(value.size() -1);
@@ -202,12 +208,13 @@ bool Machiavelli::Move(const int i){
                                  table.PrintTable();
                                 } 
                                 std::string cards;
-				std::string value;
-				std::string suit;
 				std::cout << "\nScegliere la carte da prendere => ";
-				// std::ws toglie gli spazi prima della prima lettera
-				std::getline(std::cin>>std::ws, cards);
-				
+				std::getline(std::cin, cards);
+				// Questo ciclo while elimina gli spazi dentro getline
+				// cosí se inserisco uno spazio, la size rimane 0
+				while(cards[0] == ' '){
+					cards.erase(cards.begin());
+				}
 				if(cards.size() == 0){
 					std::cout << "Carte non inserite." << std::endl;
 					continue;
@@ -223,6 +230,8 @@ bool Machiavelli::Move(const int i){
 					continue;
 				}
 				std::stringstream s(cards);
+				std::string value;
+				std::string suit;
 				while(s >> value) {
 					suit = value[value.size() -1];
 					value.erase(value.size() -1);
