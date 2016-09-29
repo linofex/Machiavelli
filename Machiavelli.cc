@@ -271,7 +271,7 @@ bool Machiavelli::Move(const int i){
 			}
 			table.UpdateTable(); // ordina le scale
 			table.PrintTable(); //stampa il tavolo
-			if(players[i]->Empty()){
+			if(players[i]->Empty() && CheckMove()){
 				std::cout << "Il giocatore " << players[i]->GetName() << " vince!" << std::endl;
 				return true;
 				
