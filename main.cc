@@ -28,7 +28,7 @@ int main(){
 	Table table;
 	Machiavelli Game(players, deck, table);
 	Game.Game();
-	for(int i = 0 ; i < num ; ++i){
+	for(int i = 0 ; i < players.size() ; ++i){
          	delete players[i];
         }
 }
