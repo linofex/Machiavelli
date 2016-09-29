@@ -11,13 +11,12 @@ Card::Card(const std::string& value_, const std::string& suit_):
 		// ma credo ci sia un bug
 		std::stringstream stoi(value);
 		stoi >> val;
-		if (val < 1 || val > 14 || (suit != "c" && suit != "p" && 
-					    suit != "q" && suit != "f" )) {
-			std::cout << "La carta " << value << suit << 
-				     " non esiste." << std::endl;
-			val = -1;
-		}
 	}
+	if (val < 1 || val > 14 || (suit != "c" && suit != "p" && 
+				suit != "q" && suit != "f" )) {
+		std::cout << "La carta " << value << suit << " non esiste." << std::endl;
+		val = -1;
+		}
 }
 
 bool Card::CompareValue(const Card& left, const Card& right) {
