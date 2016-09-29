@@ -33,7 +33,7 @@ class Machiavelli{
 		void DealCards();
 		
 		// Metodo che esegue la mossa, prendi in input il giocatore i-esimo
-		bool Move(const int i);
+		bool Move(const int& i);
 		
 		// Metodo che esegue il gioco.
 		void Game();
