@@ -78,7 +78,6 @@ void Table::UpdateTable(){
 	t_map::iterator iter = table.begin(); 
 	for(; iter != table.end(); ++iter){
 		 if (iter->second.change && !(iter->second.cards.empty()) ){
-			std::cout << "% ";
 			SetStraight(&(iter->second.cards));
 		}
 	

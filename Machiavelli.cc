@@ -3,34 +3,35 @@
 #include <algorithm>
 
 
-void PrintOp(){
-	std::cout << "\n*****************************************" << std::endl;
-	std::cout << "* Digita \t  \t  \t \t*\n*\t\"passo\" per passare\t \t*\n*\t\"mossa\" per fare una mossa \t*" << std::endl;
-	std::cout << "*****************************************\n" << std::endl;
-}
+Machiavelli::Machiavelli(const std::vector<PlayerBase*>& players_,const Deck& deck_, const Table& table_):
+							       players(players_), deck(deck_), table(table_){}
 
-void PrintOp1(){
-	std::cout << "\n*****************************************************************" << std::endl;
-	std::cout << "* Digita \t\t\t\t\t\t\t*\n*\t\"passo\"   per passare \t\t\t\t\t*\n*\t\"prendi\"  per prendere una carta e cambiarla di posto \t* \n*\t\"ins\"\t  per inserire una carta \t\t\t*\n*\t\"esc\"\t  per riniziare la mossa\t\t\t*"<< std::endl;
-	std::cout << "*****************************************************************\n" << std::endl;
-}
 
-// Questa funzione serve per accertarsi che quando viene chiesto un numero, esso
-// non sia un qualcosa di diverso
-int ChooseNum(){
-	bool flag = false;
-	int num; 	
+Machiavelli::Machiavelli(const Deck& deck_, const Table& table_):deck(deck_){
+	int num;
 	do{
-		std::cin >> num;
-		if (!std::cin.good()) {
-     			std::cin.clear();
-       			while(getchar() != '\n');				
-    		}
-    		else{
-    			flag = true;
-    		}
-    	}while(!flag);
-    	return num;
+		std::cout << "Inserisci il numero di giocatori (da 2 a 8): ";
+		num = ChooseNum();
+	}while(num < 2 || num > 8);
+	std::cin.ignore();// ignora l'invio
+	for(int i = 1 ; i <= num ; ++i){
+		std::string name;
+		std::cout << "Inserire il nome del giocatore " << i << std::endl;
+		getline(std::cin, name);
+		if(name.size() == 0){
+			players.push_back(new PlayerHuman());
+		}
+		else {
+			players.push_back(new PlayerHuman(name));
+		}
+	}
+}
+
+
+Machiavelli::~Machiavelli(){
+	for(int i = 0 ; i < players.size(); ++i){
+         	delete players[i];
+        }
 }
 
 
@@ -95,8 +96,6 @@ bool Machiavelli::CheckMove(){
 		Table::icards c = iter.GetNext();
 		if(c.change_ && c.cards_->size() > 0){ //size >0 perché mazzetti vuoti rimangono
 			iter.SetChangeF();
-			std::cout << "* ";
-			
 			if(!(this->IsTris(*(c.cards_))) && !(this->IsStraight((*c.cards_)))) {
 				return false;
 			}
@@ -107,7 +106,7 @@ bool Machiavelli::CheckMove(){
 
 
 // metodo che fa la mossa
-bool Machiavelli::Move(const int& i){
+bool Machiavelli::Move(const int i){
 	std::cout << "\nTurno del giocatore: "<< players[i]->GetName() << std::endl;
 	if(!table.Empty()){
 		table.PrintTable();
@@ -143,13 +142,11 @@ bool Machiavelli::Move(const int& i){
 		do{
 			do {
 				PrintOp1();
+				table.PrintTable();
 				std::cout << "Le tue carte: " << std::endl;
 				players[i]->SeeCards();
 				std::cout<<std::endl;
-				std::cin >> move;
-				std::cin.ignore(1, '\n');  //ignora l'ipotetico spazio
-				// che si puó inserire per caso o il nw nel buffer
-				// cosí il getline per le carte non ha problemi
+				std::cin >> move; 
 				if(move != "prendi"  && move != "passo" != 0 && move !="ins" && move !="esc"){		
 					while(getchar() != '\n'); //non stampa tutte le volte il box se digito male				
 				}
@@ -159,6 +156,8 @@ bool Machiavelli::Move(const int& i){
 				std::string cards; //stringa per le carte inserite
 				table.PrintTable(); 
 				std::cout << "\nScegliere le carte da inserire => ";
+				std::cin.ignore(1, '\n'); //ignora due caratteri o il nw nel buffer
+				// cosí il getline per le carte non ha problemi
 				std::getline(std::cin, cards);
 				// Questo ciclo while elimina gli spazi dentro getline
 				// cosí se inserisco uno spazio, la size rimane 0
@@ -212,6 +211,8 @@ bool Machiavelli::Move(const int& i){
                                 } 
                                 std::string cards;
 				std::cout << "\nScegliere la carte da prendere => ";
+				std::cin.ignore(1, '\n'); //ignora due caratteri o il nw nel buffer
+				// cosí il getline per le carte non ha problemi
 				std::getline(std::cin, cards);
 				// Questo ciclo while elimina gli spazi dentro getline
 				// cosí se inserisco uno spazio, la size rimane 0
@@ -277,9 +278,11 @@ bool Machiavelli::Move(const int& i){
 			}
 			table.UpdateTable(); // ordina le scale
 			table.PrintTable(); //stampa il tavolo
-			if(players[i]->Empty() && CheckMove()){
-				std::cout << "Il giocatore " << players[i]->GetName() << " vince!" << std::endl;
-				return true;
+			if(players[i]->Empty()){
+				if(CheckMove()){
+					std::cout << "Il giocatore " << players[i]->GetName() << " vince!" << std::endl;
+					return true;
+				}
 				
 			}	
 		}while(move !="passo");
@@ -345,3 +348,38 @@ void Machiavelli::Game(){
 	}
 	return;
 }
+
+
+
+
+void PrintOp(){
+	std::cout << "\n*****************************************" << std::endl;
+	std::cout << "* Digita \t  \t  \t \t*\n*\t\"passo\" per passare\t \t*\n*\t\"mossa\" per fare una mossa \t*" << std::endl;
+	std::cout << "*****************************************\n" << std::endl;
+}
+
+void PrintOp1(){
+	std::cout << "\n*****************************************************************" << std::endl;
+	std::cout << "* Digita \t\t\t\t\t\t\t*\n*\t\"passo\"   per passare \t\t\t\t\t*\n*\t\"prendi\"  per prendere una carta e cambiarla di posto \t* \n*\t\"ins\"\t  per inserire una carta \t\t\t*\n*\t\"esc\"\t  per riniziare la mossa\t\t\t*"<< std::endl;
+	std::cout << "*****************************************************************\n" << std::endl;
+}
+
+// Questa funzione serve per accertarsi che quando viene chiesto un numero, esso
+// non sia un qualcosa di diverso
+int ChooseNum(){
+	bool flag = false;
+	int num; 	
+	do{
+		std::cin >> num;
+		if (!std::cin.good()) {
+     			std::cin.clear();
+       			while(getchar() != '\n');				
+    		}
+    		else{
+    			flag = true;
+    		}
+    	}while(!flag);
+    	return num;
+}
+
+
