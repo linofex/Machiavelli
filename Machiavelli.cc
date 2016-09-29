@@ -95,8 +95,6 @@ bool Machiavelli::CheckMove(){
 		Table::icards c = iter.GetNext();
 		if(c.change_ && c.cards_->size() > 0){ //size >0 perché mazzetti vuoti rimangono
 			iter.SetChangeF();
-			std::cout << "* ";
-			
 			if(!(this->IsTris(*(c.cards_))) && !(this->IsStraight((*c.cards_)))) {
 				return false;
 			}
