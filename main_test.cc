@@ -9,5 +9,6 @@ int main(){
 	Table table;
 	Machiavelli Game(deck, table);
 	Game.Game();
+	return 0;
 }
 
