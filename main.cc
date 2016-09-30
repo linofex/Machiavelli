@@ -3,12 +3,12 @@
 int main(){
 	Deck deck;
 	if(!deck.Pass()){
-		return 0;
+		return 1;
 	}
 	Table table;
-	Machiavelli Game(deck, table);
+	Machiavelli game(deck, table);
 	std::cout << "\033[2J\033[1;1H";	
-	Game.Game();
+	game.Game();
 	return 0;
 }
 

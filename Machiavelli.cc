@@ -14,6 +14,7 @@ Machiavelli::Machiavelli(const Deck& deck_, const Table& table_):deck(deck_){
 		num = ChooseNum();
 	}while(num < 2 || num > 8);
 	std::cin.ignore();// ignora l'invio
+	players.reserve(num);
 	for(int i = 1 ; i <= num ; ++i){
 		std::string name;
 		std::cout << "Inserire il nome del giocatore " << i << std::endl;
@@ -243,7 +244,6 @@ bool Machiavelli::Move(const int i){
 					if(!card.Exist()){
 						continue;
 					}
-					bool flag = false;
 					std::cout << "Scegliere il mazzetto dove prendere la carta "<< card << "=> ";
 					int num = ChooseNum();
 					if(num == -1){
