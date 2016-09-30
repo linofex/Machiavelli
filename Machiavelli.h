@@ -24,7 +24,7 @@ class Machiavelli{
 		Deck deck;
 		Table table;
 		
-		// Metodi provati che servono per la verifica della mossa
+		// Metodi privati che servono per la verifica della mossa
 		bool CheckMove();
 		bool IsTris(const std::vector<Card>& cards ) const ;
 		bool IsStraight(const std::vector<Card>& cards ) const;
