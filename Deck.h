@@ -27,10 +27,16 @@ class Deck{
 		
 		// Questo metodo mescola il mazzo 
 		void Shuffle();	
+<<<<<<< HEAD
 		
 		// Questo metodo toglie una carta dal mazzo e la ritorna 
 		inline Card GetCard (){ 
 			Card card = deck.back();
+=======
+		/* This method returns a card to a player */
+		inline std::string GetCard () { 
+			std::string card = deck.back();
+>>>>>>> master
 			deck.pop_back();
 			return card;
 		}
