@@ -41,6 +41,7 @@ class Machiavelli{
 		// Metodo che esegue il gioco.
 		void Game();
 		
+		// Distruttore, dealloca i giocatori
 		~Machiavelli();
 };
 

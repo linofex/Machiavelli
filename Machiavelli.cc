@@ -41,7 +41,13 @@ Machiavelli::~Machiavelli(){
 void Machiavelli::DealCards() {
 	for(int j = 0; j < 13 ; ++j) {
 		for(int i = 0; i < players.size() ; ++i) {
-			players[i]->AddCard(deck.GetCard());
+			if(!deck.Empty()){
+				players[i]->AddCard(deck.GetCard());
+			}
+			else{
+				std::cout << "Il mazzo é vuoto, impossibile distribuire tutte carte."<< std::endl;
+				return;
+			}
 		}
 	}
 	for (int i=0 ; i < players.size() ; ++i ){
