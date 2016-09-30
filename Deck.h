@@ -34,7 +34,7 @@ class Deck{
 			deck.pop_back();
 			return card;
 		}
-		inline bool Pass(){
+		inline bool Pass() const{
 			return pass;
 		}
 		// Questo metodo controlla se il mazzo é vuoto
