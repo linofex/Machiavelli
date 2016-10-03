@@ -29,7 +29,7 @@ class Deck{
 		void Shuffle();	
 		// Questo metodo toglie una carta dal mazzo e la ritorna 
 		inline std::string GetCard () { 
-			std::string card = deck.back();
+			Card card = deck.back();
 			deck.pop_back();
 			return card;
 		}
