@@ -2,7 +2,7 @@ CC=g++ # compilatore
 LD=g++ # linker
 
 
-#lista degli oggetti
+#Compilazione degli oggetti
 Card.o: Card.cc
 	${CC}-c Card.cc
 
@@ -22,7 +22,7 @@ main.o: main.cc
 	${CC} -c main.cc
 	
 
-#compilazione progetto
+#Linking progetto
 machiavelli: Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main.o
 	${LD} -o machiavelli Deck.o Card.o Machiavelli.o Table.o PlayerBase.cc main.o
 
